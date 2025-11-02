@@ -1,0 +1,13 @@
+# Programme GALANT - Exemple 1
+# GALe LAnguage eNducaTif
+# Extension: .gal
+
+variable x = 0;
+tantque (x < 5) {
+  si (x % 2 == 0) {
+    afficher(x);
+  } sinon {
+    afficher(x * 2);
+  }
+  x = x + 1;
+}

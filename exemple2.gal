@@ -1,0 +1,12 @@
+# Calcul factorial - GALANT
+
+variable n = 5;
+variable resultat = 1;
+variable i = 1;
+
+tantque (i <= n) {
+  resultat = resultat * i;
+  i = i + 1;
+}
+
+afficher(resultat);
