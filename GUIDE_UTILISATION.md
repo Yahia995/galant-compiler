@@ -2,7 +2,7 @@
 
 ## Qu'est-ce que GALANT ?
 
-**GALANT** = **GA**Le **LAN**guage e**N**ducaTif
+**GALANT** = **GA**Le **LAN**guage educa**T**if
 
 Un compilateur minimaliste pour un langage de programmation **entièrement en français**.
 
