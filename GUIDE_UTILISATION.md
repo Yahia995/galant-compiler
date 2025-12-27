@@ -1,354 +1,1002 @@
-# 📚 Guide d'Utilisation - GALANT
+# 📚 Guide d'Utilisation Complet - GALANT
 
-## Qu'est-ce que GALANT ?
+## Table des Matières
 
-**GALANT** = **GA**Le **LAN**guage e**N**ducaTif
-
-Un compilateur minimaliste pour un langage de programmation **entièrement en français**.
-
-- **Extension de fichier** : `.gal`
-- **Langage** : Français uniquement
-- **Architecture** : Lexer → Parser → Sémantique → Exécution
+1. [Introduction](#introduction)
+2. [Installation](#installation)
+3. [Premiers Pas](#premiers-pas)
+4. [Syntaxe Détaillée](#syntaxe-détaillée)
+5. [Exemples Avancés](#exemples-avancés)
+6. [Comprendre la Sortie](#comprendre-la-sortie)
+7. [Dépannage](#dépannage)
+8. [Bonnes Pratiques](#bonnes-pratiques)
 
 ---
 
-## Installation et Compilation
+## Introduction
+
+### Qu'est-ce que GALANT ?
+
+**GALANT** (GALe LANguage educaTif) est un compilateur minimaliste pour un langage de programmation **entièrement en français**.
+
+#### Caractéristiques Principales
+
+- 📝 **Extension** : `.gal`
+- 🇫🇷 **Langage** : Français uniquement
+- 🏗️ **Architecture** : Lexer → Parser → Sémantique → Exécution
+- 🎓 **Objectif** : Apprentissage de la compilation
+
+#### Pourquoi GALANT ?
+
+- **Éducatif** : Comprendre comment fonctionne un compilateur
+- **Simple** : Syntaxe minimaliste et intuitive
+- **Français** : Pas de barrière linguistique pour les francophones
+- **Complet** : Toutes les phases de compilation implémentées
+
+---
+
+## Installation
 
 ### Prérequis
-- GCC (ou tout compilateur C compatible)
-- Make
-- Terminal/Console
 
-### Étapes
+Avant de commencer, assurez-vous d'avoir :
 
-\`\`\`bash
-# 1. Compiler le projet
+- **GCC** (version 4.8 ou supérieure)
+- **Make** (GNU Make)
+- **Terminal/Console** (Bash, PowerShell, CMD)
+
+#### Vérifier les prérequis
+
+```bash
+# Vérifier GCC
+gcc --version
+
+# Vérifier Make
+make --version
+```
+
+### Étapes d'Installation
+
+#### 1. Télécharger le projet
+
+```bash
+git clone <votre-repo-url>
+cd GALANT
+```
+
+#### 2. Compiler le projet
+
+```bash
 make
+```
 
-# 2. Vérifier que l'exécutable est créé
+**Sortie attendue :**
+```
+  Compile: main.c
+  Compile: lexer.c
+  Compile: parser.c
+  Compile: semantic.c
+Compilation reussie. Executable: galant-compiler
+```
+
+#### 3. Vérifier l'installation
+
+```bash
+# Linux/Mac
 ls -la galant-compiler
 
-# 3. Exécuter un programme
+# Windows
+dir galant-compiler.exe
+```
+
+#### 4. Premier test
+
+```bash
 ./galant-compiler programme.gal
-\`\`\`
+```
+
+### Commandes Make Utiles
+
+| Commande | Description |
+|----------|-------------|
+| `make` | Compiler le projet |
+| `make clean` | Supprimer les fichiers compilés |
+| `make run` | Compiler et exécuter `programme.gal` |
+| `make help` | Afficher l'aide |
 
 ---
 
-## Syntaxe du Langage GALANT
+## Premiers Pas
 
-### 1. Déclaration et Affectation
+### Créer Votre Premier Programme
 
-Déclarer une variable et lui assigner une valeur :
+#### Étape 1 : Créer un fichier
 
-\`\`\`galant
-variable x = 5;
-variable prenom = 10;  # N'importe quel nom
-\`\`\`
+Créez un fichier nommé `hello.gal` :
 
-Modifier la valeur :
+```galant
+# Mon premier programme GALANT
+variable message = 42;
+afficher(message);
+```
 
-\`\`\`galant
-x = 20;
-y = x + 5;
-\`\`\`
+#### Étape 2 : Exécuter
 
-### 2. Affichage
+```bash
+./galant-compiler hello.gal
+```
 
-Afficher des valeurs à l'écran :
+#### Étape 3 : Observer le résultat
 
-\`\`\`galant
+```
+=== Execution ===
+42
+```
+
+### Comprendre la Structure
+
+Chaque programme GALANT suit cette structure :
+
+```galant
+# Commentaires (optionnel)
+
+# 1. Déclarations de variables
+variable x = 10;
+variable y = 20;
+
+# 2. Traitement (boucles, conditions)
+tantque (x < y) {
+  x = x + 1;
+}
+
+# 3. Affichage des résultats
 afficher(x);
-afficher(y + 3);
-afficher(42);
-\`\`\`
+```
 
-### 3. Opérateurs Arithmétiques
+---
 
-\`\`\`galant
-variable a = 10;
+## Syntaxe Détaillée
+
+### 1. Variables
+
+#### Déclaration avec Initialisation
+
+```galant
+variable nom = valeur;
+```
+
+**Exemples :**
+```galant
+variable age = 25;
+variable compteur = 0;
+variable nombre = 100;
+```
+
+#### Déclaration sans Initialisation
+
+```galant
+variable nom;
+```
+
+⚠️ **Attention** : Utiliser une variable non initialisée provoque une erreur :
+```
+Erreur semantique: variable 'nom' utilisee avant initialisation
+```
+
+#### Réaffectation
+
+```galant
+variable x = 10;
+x = 20;          # Modification de la valeur
+x = x + 5;       # Utilisation dans une expression
+```
+
+#### Règles de Nommage
+
+✅ **Autorisé :**
+- Lettres : `a-z`, `A-Z`
+- Chiffres : `0-9` (pas en premier caractère)
+- Underscore : `_`
+
+❌ **Interdit :**
+- Espaces
+- Caractères spéciaux (sauf `_`)
+- Mots-clés du langage
+- Commencer par un chiffre
+
+**Exemples valides :**
+```galant
+variable nombre = 5;
+variable nombre_total = 10;
+variable compteur1 = 0;
+variable _valeur = 100;
+```
+
+**Exemples invalides :**
+```galant
+variable 1nombre = 5;      # Commence par un chiffre
+variable mon-nombre = 10;  # Contient un tiret
+variable variable = 20;    # Mot-clé réservé
+```
+
+---
+
+### 2. Opérateurs Arithmétiques
+
+#### Addition (`+`)
+
+```galant
+variable a = 5;
 variable b = 3;
+variable somme = a + b;    # somme = 8
+afficher(somme);
+```
 
-afficher(a + b);      # Addition : 13
-afficher(a - b);      # Soustraction : 7
-afficher(a * b);      # Multiplication : 30
-afficher(a / b);      # Division entière : 3
-afficher(a % b);      # Modulo (reste) : 1
-\`\`\`
+#### Soustraction (`-`)
 
-### 4. Conditions (SI / SINON)
+```galant
+variable difference = 10 - 3;  # difference = 7
+afficher(difference);
+```
 
-\`\`\`galant
+#### Multiplication (`*`)
+
+```galant
+variable produit = 4 * 5;      # produit = 20
+afficher(produit);
+```
+
+#### Division Entière (`/`)
+
+```galant
+variable quotient = 10 / 3;    # quotient = 3 (division entière)
+afficher(quotient);
+```
+
+⚠️ **Division par zéro :**
+```galant
+variable x = 10 / 0;
+# Erreur semantique: division par zero
+```
+
+#### Modulo (`%`)
+
+```galant
+variable reste = 10 % 3;       # reste = 1
+afficher(reste);
+```
+
+#### Priorité des Opérateurs
+
+1. **Haute priorité** : `*`, `/`, `%`
+2. **Basse priorité** : `+`, `-`
+
+```galant
+variable resultat = 2 + 3 * 4;  # resultat = 14 (pas 20)
+afficher(resultat);
+
+variable avec_parentheses = (2 + 3) * 4;  # avec_parentheses = 20
+afficher(avec_parentheses);
+```
+
+---
+
+### 3. Opérateurs de Comparaison
+
+| Opérateur | Signification | Exemple |
+|-----------|---------------|---------|
+| `==` | Égal | `x == 5` |
+| `!=` | Différent | `x != 5` |
+| `>` | Supérieur | `x > 5` |
+| `<` | Inférieur | `x < 5` |
+| `>=` | Supérieur ou égal | `x >= 5` |
+| `<=` | Inférieur ou égal | `x <= 5` |
+
+**Exemples :**
+
+```galant
+variable x = 10;
+
+si (x == 10) {
+  afficher(1);    # S'exécute
+}
+
+si (x != 5) {
+  afficher(2);    # S'exécute
+}
+
+si (x > 5) {
+  afficher(3);    # S'exécute
+}
+
+si (x <= 20) {
+  afficher(4);    # S'exécute
+}
+```
+
+---
+
+### 4. Structures de Contrôle
+
+#### Condition Simple (si)
+
+```galant
+si (condition) {
+  # Instructions si la condition est vraie
+}
+```
+
+**Exemple :**
+```galant
 variable age = 18;
 
 si (age >= 18) {
-  afficher(1);  # Majeur
+  afficher(1);    # Affiche 1
+}
+```
+
+#### Condition avec Alternative (si/sinon)
+
+```galant
+si (condition) {
+  # Instructions si vraie
 } sinon {
-  afficher(0);  # Mineur
+  # Instructions si fausse
 }
-\`\`\`
+```
 
-**Opérateurs de comparaison :**
-- `==` : Égal
-- `!=` : Différent
-- `>` : Supérieur à
-- `<` : Inférieur à
-- `>=` : Supérieur ou égal
-- `<=` : Inférieur ou égal
+**Exemple :**
+```galant
+variable nombre = 7;
 
-### 5. Boucles (TANTQUE)
+si (nombre % 2 == 0) {
+  afficher(0);    # Pair
+} sinon {
+  afficher(1);    # Impair - s'exécute
+}
+```
 
-\`\`\`galant
+#### Conditions Imbriquées
+
+```galant
+variable note = 75;
+
+si (note >= 90) {
+  afficher(5);    # Excellent
+} sinon {
+  si (note >= 80) {
+    afficher(4);  # Très bien
+  } sinon {
+    si (note >= 70) {
+      afficher(3);  # Bien - s'exécute
+    } sinon {
+      afficher(2);  # Passable
+    }
+  }
+}
+```
+
+---
+
+### 5. Boucles (tantque)
+
+#### Syntaxe de Base
+
+```galant
+tantque (condition) {
+  # Instructions à répéter
+}
+```
+
+#### Exemple Simple
+
+```galant
 variable i = 0;
 
 tantque (i < 5) {
   afficher(i);
   i = i + 1;
 }
-\`\`\`
 
-### 6. Commentaires
+# Affiche : 0, 1, 2, 3, 4
+```
 
-\`\`\`galant
-# Ceci est un commentaire
-variable x = 10;  # Affecte 10 à x
-# Les commentaires sont ignorés
-\`\`\`
+#### Boucle de Comptage
 
----
+```galant
+variable compteur = 1;
 
-## Exemples Complets
+tantque (compteur <= 10) {
+  afficher(compteur);
+  compteur = compteur + 1;
+}
 
-### Exemple 1 : Boucle Simple
+# Affiche les nombres de 1 à 10
+```
 
-**Fichier : exemple1.gal**
-\`\`\`galant
+#### Boucles Imbriquées
+
+```galant
 variable i = 0;
-tantque (i < 5) {
-  afficher(i);
+variable j = 0;
+
+tantque (i < 3) {
+  j = 0;
+  tantque (j < 2) {
+    afficher(i * 10 + j);
+    j = j + 1;
+  }
   i = i + 1;
 }
-\`\`\`
 
-\`\`\`bash
-./galant-compiler exemple1.gal
-\`\`\`
+# Affiche : 0, 1, 10, 11, 20, 21
+```
 
-**Sortie :**
-\`\`\`
-0
-1
-2
-3
-4
-\`\`\`
-
----
-
-### Exemple 2 : Nombres Pairs/Impairs
-
-**Fichier : exemple2.gal**
-\`\`\`galant
+⚠️ **Attention aux boucles infinies :**
+```galant
 variable x = 0;
 tantque (x < 10) {
-  si (x % 2 == 0) {
-    afficher(x);
-  } sinon {
-    afficher(-1);
-  }
-  x = x + 1;
+  afficher(x);
+  # ERREUR : x n'est jamais incrémenté !
+  # Boucle infinie
 }
-\`\`\`
-
-**Sortie :**
-\`\`\`
-0
--1
-2
--1
-4
--1
-6
--1
-8
--1
-\`\`\`
+```
 
 ---
 
-### Exemple 3 : Factorielle
+### 6. Affichage
 
-**Fichier : factorielle.gal**
-\`\`\`galant
-variable n = 5;
-variable resultat = 1;
-variable i = 1;
+#### Afficher une Variable
 
+```galant
+variable x = 42;
+afficher(x);      # Affiche : 42
+```
+
+#### Afficher une Expression
+
+```galant
+variable a = 5;
+variable b = 3;
+afficher(a + b);  # Affiche : 8
+afficher(a * 2);  # Affiche : 10
+```
+
+#### Afficher un Nombre Littéral
+
+```galant
+afficher(100);    # Affiche : 100
+afficher(0);      # Affiche : 0
+```
+
+#### Affichages Multiples
+
+```galant
+variable x = 10;
+variable y = 20;
+variable z = 30;
+
+afficher(x);
+afficher(y);
+afficher(z);
+
+# Affiche :
+# 10
+# 20
+# 30
+```
+
+---
+
+### 7. Commentaires
+
+#### Commentaire sur une Ligne
+
+```galant
+# Ceci est un commentaire
+variable x = 5;    # Commentaire en fin de ligne
+```
+
+#### Commentaires Multiples
+
+```galant
+# Première ligne de commentaire
+# Deuxième ligne de commentaire
+# Troisième ligne de commentaire
+variable y = 10;
+```
+
+#### Bonnes Pratiques
+
+```galant
+# ============================================
+# Programme : Calcul de factorielle
+# Auteur : Votre Nom
+# Date : 2024
+# ============================================
+
+# Initialisation des variables
+variable n = 5;              # Nombre dont on calcule la factorielle
+variable resultat = 1;       # Résultat final
+variable i = 1;              # Compteur de boucle
+
+# Calcul de la factorielle
 tantque (i <= n) {
   resultat = resultat * i;
   i = i + 1;
 }
 
+# Affichage du résultat
 afficher(resultat);
-\`\`\`
-
-**Sortie :**
-\`\`\`
-120
-\`\`\`
+```
 
 ---
 
-### Exemple 4 : Imbrication SI/SINON
+## Exemples Avancés
 
-\`\`\`galant
-variable score = 75;
+### Exemple 1 : Table de Multiplication
 
-si (score >= 80) {
-  afficher(1);  # Excellent
-} sinon {
-  si (score >= 60) {
-    afficher(2);  # Bien
-  } sinon {
-    afficher(3);  # À améliorer
-  }
+```galant
+# Table de multiplication par 7
+variable i = 1;
+variable resultat = 0;
+
+tantque (i <= 10) {
+  resultat = 7 * i;
+  afficher(resultat);
+  i = i + 1;
 }
-\`\`\`
+
+# Affiche : 7, 14, 21, 28, 35, 42, 49, 56, 63, 70
+```
+
+### Exemple 2 : Somme des N Premiers Entiers
+
+```galant
+# Somme de 1 à 100
+variable n = 100;
+variable i = 1;
+variable somme = 0;
+
+tantque (i <= n) {
+  somme = somme + i;
+  i = i + 1;
+}
+
+afficher(somme);  # Affiche : 5050
+```
+
+### Exemple 3 : Puissance
+
+```galant
+# Calcul de 2^10
+variable base = 2;
+variable exposant = 10;
+variable resultat = 1;
+variable i = 0;
+
+tantque (i < exposant) {
+  resultat = resultat * base;
+  i = i + 1;
+}
+
+afficher(resultat);  # Affiche : 1024
+```
+
+### Exemple 4 : Recherche de Maximum
+
+```galant
+# Trouver le plus grand nombre entre trois valeurs
+variable a = 45;
+variable b = 67;
+variable c = 23;
+variable max = 0;
+
+# Comparer a et b
+si (a > b) {
+  max = a;
+} sinon {
+  max = b;
+}
+
+# Comparer max avec c
+si (c > max) {
+  max = c;
+}
+
+afficher(max);  # Affiche : 67
+```
+
+### Exemple 5 : Nombres Premiers (Test Simple)
+
+```galant
+# Vérifier si 17 est premier
+variable n = 17;
+variable i = 2;
+variable est_premier = 1;
+
+tantque (i < n) {
+  si (n % i == 0) {
+    est_premier = 0;
+  }
+  i = i + 1;
+}
+
+afficher(est_premier);  # Affiche : 1 (vrai)
+```
+
+### Exemple 6 : Suite de Fibonacci
+
+```galant
+# Les 10 premiers nombres de Fibonacci
+variable n = 10;
+variable i = 0;
+variable a = 0;
+variable b = 1;
+variable temp = 0;
+
+tantque (i < n) {
+  afficher(a);
+  temp = a + b;
+  a = b;
+  b = temp;
+  i = i + 1;
+}
+
+# Affiche : 0, 1, 1, 2, 3, 5, 8, 13, 21, 34
+```
 
 ---
 
 ## Comprendre la Sortie
 
-Quand vous exécutez `./galant-compiler programme.gal`, vous verrez :
+### Structure de la Sortie
 
-**Section 1 : Code Source**
-\`\`\`
-===== CODE SOURCE =====
-variable x = 0;
-tantque (x < 5) { ... }
-\`\`\`
+Lorsque vous exécutez un programme, le compilateur affiche quatre sections :
 
-**Section 2 : Analyse Lexicale**
-\`\`\`
-===== TOKENS LEXICAUX =====
-[  0] MOT_CLE         = 'variable'
+#### 1. Code Source
+
+```
+=== Code Source ===
+variable x = 5;
+afficher(x);
+```
+
+Le code source tel qu'il est lu depuis le fichier `.gal`.
+
+#### 2. Analyse Lexicale
+
+```
+=== Analyse Lexicale ===
+[v0] Nombre de tokens: 7
+[  0] MOT_CLE         = 'variable' (mot-cle: VARIABLE)
 [  1] IDENTIFICATEUR  = 'x'
 [  2] PONCTUATION     = '='
-[  3] NOMBRE          = '0' (valeur: 0)
-\`\`\`
+[  3] NOMBRE          = '5' (valeur: 5)
+[  4] PONCTUATION     = ';'
+[  5] MOT_CLE         = 'afficher' (mot-cle: AFFICHER)
+[  6] PONCTUATION     = '('
+...
+```
 
-**Section 3 : Analyse Syntaxique**
-\`\`\`
-===== ARBRE DE SYNTAXE ABSTRAITE =====
-Programme
-  Instruction_Affectation (x = 0)
-  Instruction_Boucle
-    Condition: (x < 5)
-\`\`\`
+**Détails :**
+- Liste de tous les tokens (jetons) détectés
+- Type de chaque token
+- Valeur associée
+- Position dans le code
 
-**Section 4 : Exécution**
-\`\`\`
-===== EXÉCUTION =====
-Résultat d'exécution:
-0
-1
-2
-3
-4
-\`\`\`
+#### 3. Analyse Syntaxique (AST)
 
----
+```
+=== Analyse Syntaxique (AST) ===
+PROGRAMME
+  AFFECTATION [x]
+    NOMBRE [5] (5)
+  AFFICHAGE
+    VARIABLE [x]
+```
 
-## Mots-Clés Réservés
+**Détails :**
+- Arbre de Syntaxe Abstraite (AST)
+- Structure hiérarchique du programme
+- Relations entre les instructions
 
-| Mot-clé | Utilité |
-|---------|---------|
-| `variable` | Déclarer une variable |
-| `afficher` | Afficher une valeur |
-| `si` | Condition IF |
-| `sinon` | Condition ELSE |
-| `tantque` | Boucle WHILE |
+#### 4. Exécution
 
----
+```
+=== Execution ===
+5
+```
 
-## Commandes Make
+Le résultat de l'exécution du programme.
 
-\`\`\`bash
-make              # Compiler
-make clean        # Nettoyer
-make run          # Compiler et exécuter programme.gal
-make help         # Afficher l'aide
-\`\`\`
+### Modes de Verbosité
 
----
+Les messages `[v0]` indiquent les étapes internes :
 
-## Conseils et Bonnes Pratiques
+```
+[v0] Demarrage de l'analyse lexicale
+[v0] Lexer cree
+[v0] Lexer analyse
+...
+```
 
-1. **Toujours terminer par `;`** (sauf les blocs `{}`)
-2. **Déclarer avant d'utiliser** avec `variable`
-3. **Noms explicites** : `age` plutôt que `a`
-4. **Indenter le code** pour lisibilité
-5. **Commenter** vos programmes
-6. **Tester progressivement**
+Ces messages aident à comprendre le processus de compilation.
 
 ---
 
 ## Dépannage
 
-### Erreur : "Fichier non trouvé"
-\`\`\`
-Erreur: impossible d'ouvrir le fichier
-\`\`\`
-→ Vérifiez le chemin et l'extension `.gal`
+### Erreurs Courantes
 
-### Erreur : "Variable non déclarée"
-\`\`\`
-Erreur sémantique: variable 'x' non déclarée
-\`\`\`
-→ Utilisez `variable x = valeur;` avant utilisation
+#### 1. Fichier Non Trouvé
 
-### Erreur : "Division par zéro"
-\`\`\`
-Erreur sémantique: division par zéro
-\`\`\`
-→ Évitez les divisions par 0
+**Erreur :**
+```
+Erreur: impossible d'ouvrir le fichier 'programme.gal'
+```
 
-### Erreur : "Syntaxe invalide"
-\`\`\`
-Erreur syntaxique à la ligne X
-\`\`\`
-→ Vérifiez la grammaire française
+**Solutions :**
+- Vérifiez le nom du fichier
+- Vérifiez l'extension `.gal`
+- Vérifiez le chemin d'accès
+- Utilisez `ls` ou `dir` pour lister les fichiers
+
+#### 2. Variable Non Déclarée
+
+**Erreur :**
+```
+Erreur semantique: variable 'x' non declaree
+```
+
+**Solution :**
+```galant
+# MAUVAIS
+afficher(x);  # x n'existe pas
+
+# BON
+variable x = 5;
+afficher(x);
+```
+
+#### 3. Variable Non Initialisée
+
+**Erreur :**
+```
+Erreur semantique: variable 'x' utilisee avant initialisation
+```
+
+**Solution :**
+```galant
+# MAUVAIS
+variable x;
+afficher(x);  # x n'a pas de valeur
+
+# BON
+variable x = 0;
+afficher(x);
+```
+
+#### 4. Division par Zéro
+
+**Erreur :**
+```
+Erreur semantique: division par zero
+```
+
+**Solution :**
+```galant
+# MAUVAIS
+variable x = 10 / 0;
+
+# BON
+variable diviseur = 5;
+si (diviseur != 0) {
+  variable x = 10 / diviseur;
+  afficher(x);
+}
+```
+
+#### 5. Erreur de Syntaxe
+
+**Erreur :**
+```
+Erreur syntaxique a la ligne X
+```
+
+**Causes courantes :**
+- Oubli du point-virgule `;`
+- Parenthèses non fermées
+- Accolades non équilibrées
+- Mot-clé mal orthographié
+
+**Exemple :**
+```galant
+# MAUVAIS
+variable x = 5  # Manque le point-virgule
+
+# BON
+variable x = 5;
+```
 
 ---
 
-## Template Prêt à l'Emploi
+## Bonnes Pratiques
 
-Commencez avec ce modèle :
+### 1. Nommage des Variables
 
-\`\`\`galant
-# Mon programme GALANT
+✅ **Bon :**
+```galant
+variable nombre_etudiants = 25;
+variable somme_totale = 1000;
+variable compteur_iterations = 0;
+```
+
+❌ **Mauvais :**
+```galant
+variable n = 25;      # Peu explicite
+variable x = 1000;    # Peu explicite
+variable i = 0;       # OK seulement pour les boucles courtes
+```
+
+### 2. Indentation
+
+✅ **Bon :**
+```galant
+si (x > 0) {
+  tantque (x < 10) {
+    afficher(x);
+    x = x + 1;
+  }
+}
+```
+
+❌ **Mauvais :**
+```galant
+si (x > 0) {
+tantque (x < 10) {
+afficher(x);
+x = x + 1;
+}
+}
+```
+
+### 3. Commentaires
+
+✅ **Bon :**
+```galant
+# Calcul de la moyenne de trois notes
+variable note1 = 15;
+variable note2 = 18;
+variable note3 = 12;
+variable moyenne = (note1 + note2 + note3) / 3;
+```
+
+❌ **Mauvais :**
+```galant
+variable n1 = 15;  # note 1
+variable n2 = 18;  # note 2
+variable n3 = 12;  # note 3
+variable m = (n1 + n2 + n3) / 3;  # moyenne
+```
+
+### 4. Organisation du Code
+
+```galant
+# ====================================
+# En-tête et description
+# ====================================
 
 # Déclarations
 variable x = 0;
+variable y = 0;
 variable resultat = 0;
 
-# Traitement
+# Traitement principal
 tantque (x < 10) {
-  si (x % 2 == 0) {
-    afficher(x);
-  }
+  y = x * 2;
+  resultat = resultat + y;
   x = x + 1;
 }
 
-# Résultat
+# Affichage final
 afficher(resultat);
-\`\`\`
+```
+
+### 5. Éviter les Boucles Infinies
+
+✅ **Bon :**
+```galant
+variable i = 0;
+tantque (i < 10) {
+  afficher(i);
+  i = i + 1;  # N'oubliez pas d'incrémenter !
+}
+```
+
+❌ **Mauvais :**
+```galant
+variable i = 0;
+tantque (i < 10) {
+  afficher(i);
+  # Oubli de l'incrémentation -> boucle infinie !
+}
+```
+
+### 6. Tester Progressivement
+
+```galant
+# Étape 1 : Tester les variables
+variable x = 5;
+afficher(x);
+
+# Étape 2 : Ajouter la logique
+# tantque (...) { ... }
+
+# Étape 3 : Tester le résultat final
+```
 
 ---
 
-## Ressources
+## Template de Démarrage
 
-- Compilateur : `galant-compiler`
-- Exemples : `programme.gal`, `exemple2.gal`
-- Source : Code C modulaire (lexer, parser, semantic)
+Utilisez ce modèle pour commencer un nouveau programme :
 
-Bon codage avec GALANT ! 🚀
+```galant
+# ============================================
+# Nom du programme : [Votre titre]
+# Description : [Ce que fait le programme]
+# Auteur : [Votre nom]
+# Date : [Date]
+# ============================================
+
+# --- Déclaration des variables ---
+variable x = 0;
+variable y = 0;
+variable resultat = 0;
+
+# --- Traitement principal ---
+tantque (x < 10) {
+  # Votre logique ici
+  x = x + 1;
+}
+
+# --- Affichage des résultats ---
+afficher(resultat);
+```
+
+---
+
+## Ressources Supplémentaires
+
+- **README.md** - Vue d'ensemble du projet
+- **ARCHITECTURE.md** - Documentation technique détaillée
+- **Exemples** - Dossier avec programmes d'exemple
+
+---
+
+## Aide et Support
+
+### Commandes Utiles
+
+```bash
+# Voir l'aide de Make
+make help
+
+# Nettoyer et recompiler
+make clean && make
+
+# Exécuter le programme par défaut
+make run
+```
+
+### Débogage
+
+1. **Vérifiez la section "Analyse Lexicale"** pour voir si les tokens sont corrects
+2. **Vérifiez l'AST** pour voir si la structure est bonne
+3. **Lisez les messages d'erreur** attentivement
+4. **Testez avec un programme simple** d'abord
+
+---
+
+**Bon apprentissage avec GALANT ! 🚀📚**
