@@ -1,0 +1,19 @@
+# Compiled files
+*.o
+galant-compiler
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test output files
+*.out
+test_*.gal
