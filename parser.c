@@ -152,26 +152,34 @@ static ASTNode* parser_bloc(Parser* parser) {
 static ASTNode* parser_instruction(Parser* parser) {
     Token t = parser_peek(parser);
     
+    // Handle: variable x = expr; OR variable x;
     if (t.type == TOKEN_MOT_CLE && t.mot_cle == KW_VARIABLE) {
-        parser_next(parser);
-        Token id = parser_next(parser);
+        parser_next(parser);  // consume 'variable'
+        Token id = parser_next(parser);  // consume identifier
+        
+        ASTNode* node = parser_creer_noeud(AST_AFFECTATION);
+        node->valeur = malloc(strlen(id.valeur) + 1);
+        strcpy(node->valeur, id.valeur);
+        
+        // Check if there's an assignment
         if (parser_peek(parser).type == TOKEN_PONCTUATION && 
             strcmp(parser_peek(parser).valeur, "=") == 0) {
-            parser_next(parser);
+            parser_next(parser);  // consume '='
+            ASTNode* expr = parser_expression(parser);
+            parser_ajouter_enfant(node, expr);
         }
-        ASTNode* expr = parser_expression(parser);
+        // else: declaration without initialization, leave nb_enfants = 0
+        
+        // Consume semicolon
         if (parser_peek(parser).type == TOKEN_PONCTUATION && 
             strcmp(parser_peek(parser).valeur, ";") == 0) {
             parser_next(parser);
         }
         
-        ASTNode* node = parser_creer_noeud(AST_AFFECTATION);
-        node->valeur = malloc(strlen(id.valeur) + 1);
-        strcpy(node->valeur, id.valeur);
-        parser_ajouter_enfant(node, expr);
         return node;
     }
     
+    // Handle: x = expr; (reassignment)
     if (t.type == TOKEN_IDENTIFICATEUR) {
         Token id = parser_next(parser);
         if (parser_peek(parser).type == TOKEN_PONCTUATION && 

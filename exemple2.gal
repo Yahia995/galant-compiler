@@ -10,3 +10,4 @@ tantque (i <= n) {
 }
 
 afficher(resultat);
+

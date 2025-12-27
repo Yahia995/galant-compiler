@@ -1,6 +1,6 @@
 # Compiled files
 *.o
-galant-compiler
+*.exe
 
 # Editor files
 *.swp
