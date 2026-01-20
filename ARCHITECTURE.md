@@ -21,43 +21,12 @@
 
 ### Architecture Globale
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Code Source (.gal)                    │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│              PHASE 1 : ANALYSE LEXICALE                  │
-│                      (lexer.c/h)                         │
-│  • Lecture caractère par caractère                       │
-│  • Génération des tokens                                 │
-│  • Reconnaissance des mots-clés                          │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ▼ Tokens
-┌─────────────────────────────────────────────────────────┐
-│             PHASE 2 : ANALYSE SYNTAXIQUE                 │
-│                     (parser.c/h)                         │
-│  • Vérification de la grammaire                          │
-│  • Construction de l'AST                                 │
-│  • Analyse hiérarchique                                  │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ▼ AST (Abstract Syntax Tree)
-┌─────────────────────────────────────────────────────────┐
-│            PHASE 3 : ANALYSE SÉMANTIQUE                  │
-│                    (semantic.c/h)                        │
-│  • Vérification de cohérence                             │
-│  • Gestion des variables                                 │
-│  • Évaluation des expressions                            │
-│  • Exécution du programme                                │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│                      RÉSULTAT                            │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A[Code Source gal] --> B[Phase 1 Lexical Analysis<br/>Lexer<br/>Token generation<br/>Keyword recognition]
+    B -->|Tokens| C[Phase 2 Syntax Analysis<br/>Parser<br/>Grammar validation<br/>AST construction]
+    C -->|AST| D[Phase 3 Semantic Analysis<br/>Variable checks<br/>Expression evaluation<br/>Execution]
+    D --> E[Result]
 ```
 
 ### Principes de Conception
@@ -481,17 +450,23 @@ si (x > 0) {
 ```
 
 **AST :**
-```
-PROGRAMME
-├── AFFECTATION [x]
-│   └── NOMBRE [5] (5)
-└── CONDITION
-    ├── condition: CONDITION_EXPR [>]
-    │   ├── VARIABLE [x]
-    │   └── NOMBRE [0] (0)
-    └── bloc_si: BLOC
-        └── AFFICHAGE
-            └── VARIABLE [x]
+```mermaid
+flowchart TD
+    P[PROGRAMME]
+
+    P --> A[AFFECTATION]
+    A --> AX[VARIABLE x]
+    A --> N5[NOMBRE 5]
+
+    P --> C[CONDITION]
+
+    C --> CE[CONDITION_EXPR >]
+    CE --> VX[VARIABLE x]
+    CE --> N0[NOMBRE 0]
+
+    C --> BI[BLOC SI]
+    BI --> AF[AFFICHAGE]
+    AF --> VX2[VARIABLE x]
 ```
 
 ### Gestion des Erreurs
@@ -972,49 +947,73 @@ Où :
 
 ### Flux de Données
 
-```
-Source Code
-    │
-    ├─► Lexer ──► Tokens[]
-    │               │
-    │               ├─► Parser ──► AST
-    │               │               │
-    │               │               ├─► Semantic ──► Output
-    │               │               │      │
-    │               │               │      └─► Environment
-    │               │               │
-    │               │               └─► Errors
-    │               │
-    │               └─► Errors
-    │
-    └─► Errors
+```mermaid
+flowchart TD
+    A[Source Code]
+
+    A --> B[Lexer]
+    B --> C[Tokens]
+
+    C --> D[Parser]
+    D --> E[AST]
+
+    E --> F[Semantic Analysis]
+    F --> G[Output]
+    F --> H[Environment]
+
+    B --> X1[Errors]
+    D --> X2[Errors]
+    E --> X3[Errors]
+    A --> X4[Errors]
 ```
 
 ### Hiérarchie des Structures
 
-```
-Lexer
-├── Token[]
-│   ├── TokenType
-│   ├── MotCle
-│   └── valeur
+```mermaid
+classDiagram
+    class Lexer {
+        Token[] tokens
+    }
 
-Parser
-├── Lexer*
-└── ASTNode*
-    ├── ASTNodeType
-    ├── enfants[]
-    ├── condition
-    ├── bloc_si
-    └── bloc_sinon
+    class Token {
+        TokenType type
+        string motCle
+        string valeur
+    }
 
-Semantic
-├── Environnement
-│   └── Variable[]
-│       ├── nom
-│       ├── valeur
-│       └── initialise
-└── error_flag
+    class Parser {
+        Lexer* lexer
+        ASTNode* ast
+    }
+
+    class ASTNode {
+        ASTNodeType type
+        ASTNode[] enfants
+        ASTNode* condition
+        ASTNode* bloc_si
+        ASTNode* bloc_sinon
+    }
+
+    class Semantic {
+        Environnement env
+        bool error_flag
+    }
+
+    class Environnement {
+        Variable[] variables
+    }
+
+    class Variable {
+        string nom
+        int valeur
+        bool initialise
+    }
+
+    Lexer --> Token
+    Parser --> Lexer
+    Parser --> ASTNode
+    Semantic --> Environnement
+    Environnement --> Variable
 ```
 
 ---
