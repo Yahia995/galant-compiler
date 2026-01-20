@@ -99,8 +99,8 @@ xcode-select --install
 
 ```bash
 # 1️⃣ Cloner le projet
-git clone <votre-repo>
-cd GALANT
+git clone https://github.com/Yahia995/galant-compiler.git
+cd galant-compiler
 
 # 2️⃣ Compiler
 make
