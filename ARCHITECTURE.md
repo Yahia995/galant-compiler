@@ -1,12 +1,12 @@
-# 🧠 Architecture du Compilateur GALANT
+# 📚 Guide d'Utilisation Complet - GALANT
 
 <div align="center">
 
-![Architecture](https://img.shields.io/badge/GALANT-Architecture-purple?style=for-the-badge&logo=hackthebox&logoColor=white)
-[![Complexité](https://img.shields.io/badge/Complexité-O(n)-green?style=for-the-badge)](.)
-[![Langage](https://img.shields.io/badge/Langage-C99-orange?style=for-the-badge&logo=c)](.)
+![GALANT Guide](https://img.shields.io/badge/GALANT-Guide_Utilisateur-blue?style=for-the-badge&logo=bookstack&logoColor=white)
+[![Niveau](https://img.shields.io/badge/Niveau-Débutant_à_Avancé-green?style=for-the-badge)](.)
+[![Langue](https://img.shields.io/badge/Langue-Français-red?style=for-the-badge)](.)
 
-*Documentation technique complète du compilateur éducatif GALANT*
+*Guide complet pour maîtriser le langage GALANT* 🎓
 
 </div>
 
@@ -14,80 +14,337 @@
 
 ## 📑 Table des Matières
 
-| 🔷 Section | 📝 Description |
-|-----------|---------------|
-| [🌐 Vue d'Ensemble](#-vue-densemble) | Architecture globale |
-| [🔍 Phase 1 : Lexer](#-phase-1--analyse-lexicale) | Analyse lexicale (tokens) |
-| [🌳 Phase 2 : Parser](#-phase-2--analyse-syntaxique) | Analyse syntaxique (AST) |
-| [✅ Phase 3 : Semantic](#-phase-3--analyse-sémantique) | Analyse sémantique et exécution |
-| [🎯 Module Principal](#-module-principal) | Point d'entrée (main.c) |
-| [💾 Gestion Mémoire](#-gestion-mémoire) | Allocation et libération |
-| [🐛 Gestion des Erreurs](#-gestion-des-erreurs) | Détection et traitement |
-| [📊 Performance](#-complexité-et-performance) | Analyse de complexité |
+| Section | Description |
+|---------|-------------|
+| [🎯 Introduction](#-introduction) | Qu'est-ce que GALANT ? |
+| [💻 Installation](#-installation) | Guide d'installation complet |
+| [🚀 Premiers Pas](#-premiers-pas) | Créer votre premier programme |
+| [📖 Syntaxe Détaillée](#-syntaxe-détaillée) | Référence complète du langage |
+| [💡 Exemples Avancés](#-exemples-avancés) | Programmes complexes |
+| [🔍 Comprendre la Sortie](#-comprendre-la-sortie) | Interpréter les résultats |
+| [🐛 Dépannage](#-dépannage) | Solutions aux problèmes courants |
+| [✅ Bonnes Pratiques](#-bonnes-pratiques) | Code propre et maintenable |
 
 ---
 
-## 🌐 Vue d'Ensemble
+## 🎯 Introduction
 
-### 🏗️ Architecture Globale
-
-```mermaid
-graph TB
-    A["📝 Code Source<br/>.gal"] --> B["🔍 Phase 1<br/>LEXER<br/>Tokenization"]
-    B --> C["🌳 Phase 2<br/>PARSER<br/>AST Construction"]
-    C --> D["✅ Phase 3<br/>SEMANTIC<br/>Execution"]
-    D --> E["📤 Résultat"]
-    
-    B -.->|Erreur| F["❌ Erreur Lexicale"]
-    C -.->|Erreur| G["❌ Erreur Syntaxique"]
-    D -.->|Erreur| H["❌ Erreur Sémantique"]
-    
-    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#000
-    style B fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
-    style C fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px,color:#000
-    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:3px,color:#000
-    style E fill:#fff9c4,stroke:#f57f17,stroke-width:3px,color:#000
-    style F fill:#ffcdd2,stroke:#c62828,color:#000
-    style G fill:#ffcdd2,stroke:#c62828,color:#000
-    style H fill:#ffcdd2,stroke:#c62828,color:#000
-```
-
-### 🎯 Principes de Conception
+### Qu'est-ce que GALANT ?
 
 <table>
 <tr>
-<td width="50%">
+<td width="70%">
 
-#### 🧩 Modularité
-- Chaque phase est indépendante
-- Interfaces claires entre modules
-- Facilite la maintenance et l'évolution
+**GALANT** (GALe LANguage educaTif) est un compilateur minimaliste pour un langage de programmation **entièrement en français**.
+
+#### 🎨 Vision
+Permettre aux francophones d'apprendre la programmation et la compilation sans barrière linguistique.
 
 </td>
-<td width="50%">
+<td width="30%">
 
-#### 🔬 Clarté
-- Code lisible et bien commenté
-- Nommage explicite
-- Documentation intégrée
+```mermaid
+graph TD
+    A[🧑‍🎓 Étudiant] --> B[GALANT]
+    B --> C[💡 Apprentissage]
+    C --> D[🏆 Maîtrise]
+    
+    style B fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#ffffff
+```
+
+</td>
+</tr>
+</table>
+
+### 🌟 Caractéristiques Principales
+
+| Caractéristique | Description | Avantage |
+|----------------|-------------|----------|
+| 📝 **Extension** | `.gal` | Format dédié et reconnaissable |
+| 🇫🇷 **Langage** | Français uniquement | Pas de barrière linguistique |
+| 🏗️ **Architecture** | Lexer → Parser → Sémantique | Comprendre la compilation |
+| 🎓 **Objectif** | Apprentissage | Idéal pour les débutants |
+
+### ❓ Pourquoi GALANT ?
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  ✅ Éducatif    │ Comprendre comment fonctionne un      │
+│                 │ compilateur de A à Z                  │
+├─────────────────────────────────────────────────────────┤
+│  ✅ Simple      │ Syntaxe minimaliste et intuitive      │
+│                 │ pour se concentrer sur l'essentiel    │
+├─────────────────────────────────────────────────────────┤
+│  ✅ Français    │ Pas de barrière linguistique pour     │
+│                 │ les francophones                      │
+├─────────────────────────────────────────────────────────┤
+│  ✅ Complet     │ Toutes les phases de compilation      │
+│                 │ implémentées                          │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 💻 Installation
+
+### 📋 Prérequis
+
+<details>
+<summary><b>🔍 Vérifier les prérequis (cliquez pour développer)</b></summary>
+
+#### Vérification GCC
+
+```bash
+gcc --version
+```
+
+**Sortie attendue :**
+```
+gcc (Ubuntu 9.4.0-1ubuntu1~20.04) 9.4.0
+Copyright (C) 2019 Free Software Foundation, Inc.
+```
+
+#### Vérification Make
+
+```bash
+make --version
+```
+
+**Sortie attendue :**
+```
+GNU Make 4.2.1
+Built for x86_64-pc-linux-gnu
+```
+
+</details>
+
+### 🛠️ Installation des Outils
+
+<table>
+<tr>
+<th>Système</th>
+<th>Commande</th>
+</tr>
+<tr>
+<td>🐧 <b>Linux (Ubuntu/Debian)</b></td>
+<td>
+
+```bash
+sudo apt-get update
+sudo apt-get install build-essential
+```
 
 </td>
 </tr>
 <tr>
-<td width="50%">
+<td>🍎 <b>macOS</b></td>
+<td>
 
-#### 🛡️ Robustesse
-- Gestion complète des erreurs
-- Validation à chaque étape
-- Messages d'erreur informatifs
+```bash
+xcode-select --install
+```
 
 </td>
-<td width="50%">
+</tr>
+<tr>
+<td>🪟 <b>Windows</b></td>
+<td>
 
-#### 🎓 Éducatif
-- Structure facile à comprendre
-- Commentaires pédagogiques
-- Exemples intégrés
+Installer [MinGW](http://mingw.org/) ou utiliser [WSL](https://docs.microsoft.com/en-us/windows/wsl/)
+
+</td>
+</tr>
+</table>
+
+### ⚡ Étapes d'Installation
+
+#### 📥 Étape 1 : Télécharger le projet
+
+```bash
+git clone https://github.com/Yahia995/galant-compiler
+cd galant-compiler
+```
+
+#### 🔨 Étape 2 : Compiler le projet
+
+```bash
+make
+```
+
+**✅ Sortie attendue :**
+```
+  Compile: main.c
+  Compile: lexer.c
+  Compile: parser.c
+  Compile: semantic.c
+Compilation reussie. Executable: galant-compiler
+```
+
+#### 🎯 Étape 3 : Vérifier l'installation
+
+```bash
+# Linux/Mac
+ls -la galant-compiler
+
+# Windows
+dir galant-compiler.exe
+```
+
+#### 🚀 Étape 4 : Premier test
+
+```bash
+./galant-compiler programme.gal
+```
+
+### 🎮 Commandes Make Utiles
+
+| Commande | 🎯 Objectif | 📝 Description |
+|----------|------------|---------------|
+| `make` | Compiler | Compile tous les fichiers source |
+| `make clean` | Nettoyer | Supprime les fichiers compilés |
+| `make run` | Exécuter | Compile et exécute `programme.gal` |
+| `make help` | Aide | Affiche toutes les commandes disponibles |
+
+---
+
+## 🚀 Premiers Pas
+
+### 📝 Créer Votre Premier Programme
+
+#### Étape 1️⃣ : Créer un fichier
+
+Créez un fichier nommé `hello.gal` :
+
+```galant
+# Mon premier programme GALANT
+variable message = 42;
+afficher(message);
+```
+
+#### Étape 2️⃣ : Exécuter
+
+```bash
+./galant-compiler hello.gal
+```
+
+#### Étape 3️⃣ : Observer le résultat
+
+```
+=== Execution ===
+42
+```
+
+### 🏗️ Comprendre la Structure
+
+```mermaid
+graph TD
+    A["📝 Commentaires<br/>optionnel"] --> B["🔤 Déclarations<br/>de variables"]
+    B --> C["⚙️ Traitement<br/>boucles conditions"]
+    C --> D["🖨️ Affichage<br/>des résultats"]
+    
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000000
+    style B fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000000
+    style C fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000000
+    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000000
+```
+
+**Exemple de structure complète :**
+
+```galant
+# 1️⃣ Commentaires (optionnel)
+# Description du programme
+
+# 2️⃣ Déclarations de variables
+variable x = 10;
+variable y = 20;
+
+# 3️⃣ Traitement (boucles, conditions)
+tantque (x < y) {
+  x = x + 1;
+}
+
+# 4️⃣ Affichage des résultats
+afficher(x);
+```
+
+---
+
+## 📖 Syntaxe Détaillée
+
+### 1️⃣ Variables
+
+#### 📌 Déclaration avec Initialisation
+
+```galant
+variable nom = valeur;
+```
+
+**💡 Exemples :**
+```galant
+variable age = 25;        # ✅ Entier positif
+variable compteur = 0;    # ✅ Zéro
+variable nombre = 100;    # ✅ Grand nombre
+```
+
+#### 📌 Déclaration sans Initialisation
+
+```galant
+variable nom;
+```
+
+> ⚠️ **Attention** : Utiliser une variable non initialisée provoque une erreur !
+
+```
+❌ Erreur semantique: variable 'nom' utilisee avant initialisation
+```
+
+#### 📌 Réaffectation
+
+```galant
+variable x = 10;    # Déclaration initiale
+x = 20;             # ✅ Modification de la valeur
+x = x + 5;          # ✅ Utilisation dans une expression
+```
+
+#### 📏 Règles de Nommage
+
+<table>
+<tr>
+<th width="50%">✅ Autorisé</th>
+<th width="50%">❌ Interdit</th>
+</tr>
+<tr>
+<td>
+
+**Caractères valides :**
+- Lettres : `a-z`, `A-Z`
+- Chiffres : `0-9` (pas en 1er)
+- Underscore : `_`
+
+**Exemples :**
+```galant
+variable nombre = 5;
+variable nombre_total = 10;
+variable compteur1 = 0;
+variable _valeur = 100;
+```
+
+</td>
+<td>
+
+**Invalide :**
+- Espaces
+- Caractères spéciaux (sauf `_`)
+- Mots-clés du langage
+- Commencer par un chiffre
+
+**Exemples :**
+```galant
+variable 1nombre = 5;     ❌
+variable mon-nombre = 10; ❌
+variable variable = 20;   ❌
+variable mon nombre = 30; ❌
+```
 
 </td>
 </tr>
@@ -95,1071 +352,1072 @@ graph TB
 
 ---
 
-## 🔍 Phase 1 : Analyse Lexicale
+### 2️⃣ Opérateurs Arithmétiques
 
-### 🎯 Objectif
+#### ➕ Addition
 
-> Transformer le code source en une séquence de **tokens** (jetons lexicaux)
-
-### 📁 Fichiers
-
-| Fichier | Rôle |
-|---------|------|
-| `lexer.c` | 🔧 Implémentation |
-| `lexer.h` | 📋 Interface et structures |
-
-### 🏗️ Structures de Données
-
-#### 1️⃣ TokenType - Types de Tokens
-
-```c
-typedef enum {
-    TOKEN_NOMBRE,           // 42, 100, -5
-    TOKEN_IDENTIFICATEUR,   // x, compteur, somme
-    TOKEN_MOT_CLE,         // variable, si, tantque
-    TOKEN_OPERATEUR_ARITH, // +, -, *, /, %
-    TOKEN_OPERATEUR_COMP,  // ==, !=, >, <, >=, <=
-    TOKEN_PONCTUATION,     // ;, (, ), {, }, =
-    TOKEN_EOF,             // Fin de fichier
-    TOKEN_ERREUR          // Token invalide
-} TokenType;
+```galant
+variable a = 5;
+variable b = 3;
+variable somme = a + b;    # somme = 8
+afficher(somme);
 ```
 
-#### 2️⃣ MotCle - Mots-clés du Langage
+#### ➖ Soustraction
 
-```c
-typedef enum {
-    KW_VARIABLE,  // variable
-    KW_AFFICHER,  // afficher
-    KW_SI,        // si
-    KW_SINON,     // sinon
-    KW_TANTQUE,   // tantque
-    KW_NONE       // Pas un mot-clé
-} MotCle;
+```galant
+variable difference = 10 - 3;  # difference = 7
+afficher(difference);
 ```
 
-#### 3️⃣ Token - Structure d'un Token
+#### ✖️ Multiplication
 
-```c
-typedef struct {
-    TokenType type;        // Type du token
-    char* valeur;         // Texte du token
-    int ligne;            // Numéro de ligne
-    int colonne;          // Position dans la ligne
-    MotCle mot_cle;       // Si c'est un mot-clé
-    int valeur_nombre;    // Si c'est un nombre
-} Token;
+```galant
+variable produit = 4 * 5;      # produit = 20
+afficher(produit);
 ```
 
-**Représentation visuelle :**
+#### ➗ Division Entière
 
-```
-┌─────────────────────────────────────┐
-│ Token                               │
-├─────────────────────────────────────┤
-│ type:    TOKEN_MOT_CLE              │
-│ valeur:  "variable"                 │
-│ ligne:   1                          │
-│ colonne: 1                          │
-│ mot_cle: KW_VARIABLE                │
-└─────────────────────────────────────┘
+```galant
+variable quotient = 10 / 3;    # quotient = 3 (division entière)
+afficher(quotient);
 ```
 
-#### 4️⃣ Lexer - Structure Principale
+> ⚠️ **Division par zéro :**
+> ```galant
+> variable x = 10 / 0;
+> # ❌ Erreur semantique: division par zero
+> ```
 
-```c
-typedef struct {
-    const char* source;   // Code source
-    size_t pos;          // Position actuelle
-    int ligne;           // Ligne actuelle
-    int colonne;         // Colonne actuelle
-    Token* tokens;       // Tableau de tokens
-    int nb_tokens;       // Nombre de tokens
-    int capacite;        // Capacité du tableau
-} Lexer;
+#### 📐 Modulo (Reste)
+
+```galant
+variable reste = 10 % 3;       # reste = 1
+afficher(reste);
 ```
 
-### ⚙️ Fonctions Principales
-
-#### 🔨 Création du Lexer
-
-```c
-Lexer* lexer_creer(const char* source)
-```
-
-**Responsabilités :**
-- ✅ Allouer la mémoire pour le lexer
-- ✅ Initialiser la position à 0
-- ✅ Créer le tableau de tokens (capacité : 100)
-
-**Complexité :** `O(1)`
-
-#### 🔍 Analyse Lexicale
-
-```c
-void lexer_analyser(Lexer* lexer)
-```
-
-**Algorithme détaillé :**
+#### 🎯 Priorité des Opérateurs
 
 ```mermaid
 graph TD
-    A[Début] --> B{Fin du fichier?}
-    B -->|Non| C[Lire caractère]
-    B -->|Oui| Z[Ajouter TOKEN_EOF]
+    A["Haute priorité<br/>* / %"] --> B["Basse priorité<br/>+ -"]
     
-    C --> D{Type?}
-    D -->|Espace/\n| B
-    D -->|#| E[Ignorer commentaire]
-    D -->|Chiffre| F[lire_nombre]
-    D -->|Lettre| G[lire_identificateur]
-    D -->|Opérateur| H[lire_operateur]
-    D -->|Ponctuation| I[Créer token]
-    D -->|Autre| J[TOKEN_ERREUR]
-    
-    E --> B
-    F --> K[Ajouter token]
-    G --> K
-    H --> K
-    I --> K
-    J --> K
-    K --> B
-    
-    Z --> W[Fin]
-    
-    style A fill:#4caf50,color:#fff
-    style W fill:#4caf50,color:#fff
-    style J fill:#f44336,color:#fff
+    style A fill:#ff5252,stroke:#c62828,stroke-width:3px,color:#ffffff
+    style B fill:#ffc107,stroke:#f57c00,stroke-width:3px,color:#000000
 ```
 
-**Pseudo-code :**
+**Exemples :**
 
-```
-TANT QUE pas fin du fichier :
-    caractère ← lire_caractère()
-    
-    SI caractère est un espace ou \n :
-        ignorer et continuer
-    
-    SINON SI caractère est '#' :
-        ignorer jusqu'à fin de ligne (commentaire)
-    
-    SINON SI caractère est un chiffre :
-        lire_nombre()
-    
-    SINON SI caractère est une lettre :
-        lire_identificateur()
-        vérifier si c'est un mot-clé
-    
-    SINON SI caractère est un opérateur (+, -, *, /, %, etc.) :
-        lire_operateur()
-        gérer les opérateurs doubles (==, !=, <=, >=)
-    
-    SINON SI caractère est une ponctuation :
-        créer token de ponctuation
-    
-    SINON :
-        créer TOKEN_ERREUR
-
-AJOUTER TOKEN_EOF à la fin
-```
-
-**Complexité :** `O(n)` où n = longueur du code source
-
-### 📊 Exemple de Tokenization
-
-**Entrée :**
 ```galant
-variable x = 5;
+variable resultat = 2 + 3 * 4;  
+# resultat = 14 (pas 20)
+# Explication: 3 * 4 = 12, puis 2 + 12 = 14
+
+variable avec_parentheses = (2 + 3) * 4;  
+# avec_parentheses = 20
+# Explication: 2 + 3 = 5, puis 5 * 4 = 20
 ```
-
-**Processus :**
-
-```mermaid
-graph LR
-    A["variable"] --> B["x"]
-    B --> C["="]
-    C --> D["5"]
-    D --> E[";"]
-    
-    style A fill:#f3e5f5
-    style B fill:#e1f5ff
-    style C fill:#fff3e0
-    style D fill:#c8e6c9
-    style E fill:#fff9c4
-```
-
-**Sortie (Tokens) :**
-
-| Index | Type | Valeur | Détails |
-|-------|------|--------|---------|
-| `[0]` | `TOKEN_MOT_CLE` | `"variable"` | KW_VARIABLE |
-| `[1]` | `TOKEN_IDENTIFICATEUR` | `"x"` | - |
-| `[2]` | `TOKEN_PONCTUATION` | `"="` | - |
-| `[3]` | `TOKEN_NOMBRE` | `"5"` | valeur: 5 |
-| `[4]` | `TOKEN_PONCTUATION` | `";"` | - |
-| `[5]` | `TOKEN_EOF` | `""` | - |
 
 ---
 
-## 🌳 Phase 2 : Analyse Syntaxique
+### 3️⃣ Opérateurs de Comparaison
 
-### 🎯 Objectif
+<table>
+<tr>
+<th>Opérateur</th>
+<th>Signification</th>
+<th>Exemple</th>
+<th>Résultat (x=10)</th>
+</tr>
+<tr>
+<td align="center"><code>==</code></td>
+<td>Égal</td>
+<td><code>x == 10</code></td>
+<td>✅ Vrai (1)</td>
+</tr>
+<tr>
+<td align="center"><code>!=</code></td>
+<td>Différent</td>
+<td><code>x != 5</code></td>
+<td>✅ Vrai (1)</td>
+</tr>
+<tr>
+<td align="center"><code>&gt;</code></td>
+<td>Supérieur</td>
+<td><code>x &gt; 5</code></td>
+<td>✅ Vrai (1)</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;</code></td>
+<td>Inférieur</td>
+<td><code>x &lt; 20</code></td>
+<td>✅ Vrai (1)</td>
+</tr>
+<tr>
+<td align="center"><code>&gt;=</code></td>
+<td>Supérieur ou égal</td>
+<td><code>x &gt;= 10</code></td>
+<td>✅ Vrai (1)</td>
+</tr>
+<tr>
+<td align="center"><code>&lt;=</code></td>
+<td>Inférieur ou égal</td>
+<td><code>x &lt;= 15</code></td>
+<td>✅ Vrai (1)</td>
+</tr>
+</table>
 
-> Construire un **Arbre de Syntaxe Abstraite (AST)** représentant la structure du programme
+**💡 Exemple complet :**
 
-### 📁 Fichiers
+```galant
+variable x = 10;
 
-| Fichier | Rôle |
-|---------|------|
-| `parser.c` | 🔧 Implémentation |
-| `parser.h` | 📋 Interface et structures |
+si (x == 10) {
+  afficher(1);    # ✅ S'exécute
+}
 
-### 🏗️ Structures de Données
+si (x != 5) {
+  afficher(2);    # ✅ S'exécute
+}
 
-#### 1️⃣ ASTNodeType - Types de Nœuds
+si (x > 5) {
+  afficher(3);    # ✅ S'exécute
+}
 
-```c
-typedef enum {
-    AST_PROGRAMME,       // Nœud racine
-    AST_AFFECTATION,     // x = expr
-    AST_AFFICHAGE,       // afficher(expr)
-    AST_CONDITION,       // si (cond) {...} sinon {...}
-    AST_BOUCLE,          // tantque (cond) {...}
-    AST_BLOC,            // { instructions }
-    AST_EXPRESSION,      // Expression générique
-    AST_NOMBRE,          // 42
-    AST_VARIABLE,        // x
-    AST_OPERATEUR,       // +, -, *, /, %
-    AST_CONDITION_EXPR   // ==, !=, >, <, >=, <=
-} ASTNodeType;
+si (x <= 20) {
+  afficher(4);    # ✅ S'exécute
+}
 ```
 
-#### 2️⃣ ASTNode - Nœud de l'AST
+---
 
-```c
-typedef struct ASTNode {
-    ASTNodeType type;              // Type du nœud
-    char* valeur;                  // Valeur (nom variable, opérateur)
-    int nombre;                    // Valeur numérique
-    struct ASTNode** enfants;      // Tableau d'enfants
-    int nb_enfants;                // Nombre d'enfants
-    int capacite;                  // Capacité du tableau
-    struct ASTNode* condition;     // Condition (pour si/tantque)
-    struct ASTNode* bloc_si;       // Bloc si vrai
-    struct ASTNode* bloc_sinon;    // Bloc si faux
-} ASTNode;
+### 4️⃣ Structures de Contrôle
+
+#### 🔀 Condition Simple (si)
+
+```galant
+si (condition) {
+  # Instructions si la condition est vraie
+}
 ```
 
-**Représentation visuelle d'un nœud :**
+**💡 Exemple :**
+```galant
+variable age = 18;
 
-```
-┌──────────────────────────────────────┐
-│ ASTNode                              │
-├──────────────────────────────────────┤
-│ type:      AST_AFFECTATION           │
-│ valeur:    "x"                       │
-│ enfants[]: [NOMBRE(5)]               │
-│ nb_enfants: 1                        │
-└──────────────────────────────────────┘
+si (age >= 18) {
+  afficher(1);    # ✅ Affiche 1 (majeur)
+}
 ```
 
-### 📖 Grammaire du Langage
+#### 🔀 Condition avec Alternative (si/sinon)
 
-#### Notation EBNF
-
-```ebnf
-programme        ::= { instruction }
-
-instruction      ::= affectation 
-                   | affichage 
-                   | condition 
-                   | boucle
-
-affectation      ::= "variable" IDENTIFICATEUR ["=" expression] ";"
-                   | IDENTIFICATEUR "=" expression ";"
-
-affichage        ::= "afficher" "(" expression ")" ";"
-
-condition        ::= "si" "(" condition_expr ")" bloc 
-                     ["sinon" bloc]
-
-boucle           ::= "tantque" "(" condition_expr ")" bloc
-
-bloc             ::= "{" { instruction } "}"
-
-condition_expr   ::= expression operateur_comp expression
-
-expression       ::= terme { ("+" | "-") terme }
-
-terme            ::= facteur { ("*" | "/" | "%") facteur }
-
-facteur          ::= NOMBRE 
-                   | IDENTIFICATEUR 
-                   | "(" expression ")"
-
-operateur_comp   ::= "==" | "!=" | ">" | "<" | ">=" | "<="
+```galant
+si (condition) {
+  # Instructions si vraie
+} sinon {
+  # Instructions si fausse
+}
 ```
 
-### 🎨 Exemple d'AST
+**💡 Exemple :**
+```galant
+variable nombre = 7;
 
-**Code :**
+si (nombre % 2 == 0) {
+  afficher(0);    # Pair
+} sinon {
+  afficher(1);    # ✅ Impair - s'exécute
+}
+```
+
+#### 🔀 Conditions Imbriquées
+
+```mermaid
+graph TD
+    A{note >= 90?} -->|Oui| B[Excellent<br/>afficher 5]
+    A -->|Non| C{note >= 80?}
+    C -->|Oui| D[Très bien<br/>afficher 4]
+    C -->|Non| E{note >= 70?}
+    E -->|Oui| F[Bien<br/>afficher 3]
+    E -->|Non| G[Passable<br/>afficher 2]
+    
+    style B fill:#4caf50,stroke:#2e7d32,stroke-width:2px,color:#ffffff
+    style D fill:#8bc34a,stroke:#558b2f,stroke-width:2px,color:#ffffff
+    style F fill:#ffc107,stroke:#f57c00,stroke-width:2px,color:#000000
+    style G fill:#ff9800,stroke:#e65100,stroke-width:2px,color:#ffffff
+```
+
+**Code correspondant :**
+
+```galant
+variable note = 75;
+
+si (note >= 90) {
+  afficher(5);    # Excellent
+} sinon {
+  si (note >= 80) {
+    afficher(4);  # Très bien
+  } sinon {
+    si (note >= 70) {
+      afficher(3);  # ✅ Bien - s'exécute
+    } sinon {
+      afficher(2);  # Passable
+    }
+  }
+}
+```
+
+---
+
+### 5️⃣ Boucles (tantque)
+
+#### 🔁 Syntaxe de Base
+
+```galant
+tantque (condition) {
+  # Instructions à répéter
+}
+```
+
+#### 🔁 Exemple Simple
+
+```galant
+variable i = 0;
+
+tantque (i < 5) {
+  afficher(i);
+  i = i + 1;
+}
+
+# 📤 Affiche : 0, 1, 2, 3, 4
+```
+
+**📊 Flux d'exécution :**
+
+```
+┌─────────────────┐
+│  i = 0          │ Initialisation
+└────────┬────────┘
+         │
+    ┌────▼────┐
+    │ i < 5?  │ Condition
+    └─┬────┬──┘
+      │Oui │Non
+      │    │
+      ▼    └────────┐
+ ┌─────────┐        │
+ │afficher │        │
+ │i = i+1  │        │
+ └────┬────┘        │
+      │             │
+      └─────────────┘
+                    ▼
+                 [FIN]
+```
+
+#### 🔁 Boucle de Comptage
+
+```galant
+variable compteur = 1;
+
+tantque (compteur <= 10) {
+  afficher(compteur);
+  compteur = compteur + 1;
+}
+
+# 📤 Affiche les nombres de 1 à 10
+```
+
+#### 🔁 Boucles Imbriquées
+
+```galant
+variable i = 0;
+variable j = 0;
+
+tantque (i < 3) {
+  j = 0;
+  tantque (j < 2) {
+    afficher(i * 10 + j);
+    j = j + 1;
+  }
+  i = i + 1;
+}
+
+# 📤 Affiche : 0, 1, 10, 11, 20, 21
+```
+
+> ⚠️ **Attention aux boucles infinies !**
+>
+> ```galant
+> variable x = 0;
+> tantque (x < 10) {
+>   afficher(x);
+>   # ❌ ERREUR : x n'est jamais incrémenté !
+>   # Boucle infinie ♾️
+> }
+> ```
+
+---
+
+### 6️⃣ Affichage
+
+#### 🖨️ Afficher une Variable
+
+```galant
+variable x = 42;
+afficher(x);      # 📤 Affiche : 42
+```
+
+#### 🖨️ Afficher une Expression
+
+```galant
+variable a = 5;
+variable b = 3;
+afficher(a + b);  # 📤 Affiche : 8
+afficher(a * 2);  # 📤 Affiche : 10
+```
+
+#### 🖨️ Afficher un Nombre Littéral
+
+```galant
+afficher(100);    # 📤 Affiche : 100
+afficher(0);      # 📤 Affiche : 0
+```
+
+#### 🖨️ Affichages Multiples
+
+```galant
+variable x = 10;
+variable y = 20;
+variable z = 30;
+
+afficher(x);
+afficher(y);
+afficher(z);
+
+# 📤 Affiche :
+# 10
+# 20
+# 30
+```
+
+---
+
+### 7️⃣ Commentaires
+
+#### 💬 Commentaire sur une Ligne
+
+```galant
+# Ceci est un commentaire
+variable x = 5;    # Commentaire en fin de ligne
+```
+
+#### 💬 Commentaires Multiples
+
+```galant
+# Première ligne de commentaire
+# Deuxième ligne de commentaire
+# Troisième ligne de commentaire
+variable y = 10;
+```
+
+#### 💬 Bonnes Pratiques
+
+```galant
+# ============================================
+# Programme : Calcul de factorielle
+# Auteur : Votre Nom
+# Date : 2024
+# ============================================
+
+# Initialisation des variables
+variable n = 5;              # Nombre dont on calcule la factorielle
+variable resultat = 1;       # Résultat final
+variable i = 1;              # Compteur de boucle
+
+# Calcul de la factorielle
+tantque (i <= n) {
+  resultat = resultat * i;
+  i = i + 1;
+}
+
+# Affichage du résultat
+afficher(resultat);
+```
+
+---
+
+## 💡 Exemples Avancés
+
+### 📊 Exemple 1 : Table de Multiplication
+
+<details>
+<summary><b>👁️ Voir le code et l'explication</b></summary>
+
+```galant
+# Table de multiplication par 7
+variable i = 1;
+variable resultat = 0;
+
+tantque (i <= 10) {
+  resultat = 7 * i;
+  afficher(resultat);
+  i = i + 1;
+}
+```
+
+**📤 Sortie :**
+```
+7
+14
+21
+28
+35
+42
+49
+56
+63
+70
+```
+
+**📝 Explication :**
+- On initialise `i` à 1
+- On calcule `7 * i` à chaque itération
+- On affiche le résultat
+- On incrémente `i`
+
+</details>
+
+### 🧮 Exemple 2 : Somme des N Premiers Entiers
+
+<details>
+<summary><b>👁️ Voir le code et l'explication</b></summary>
+
+```galant
+# Somme de 1 à 100
+variable n = 100;
+variable i = 1;
+variable somme = 0;
+
+tantque (i <= n) {
+  somme = somme + i;
+  i = i + 1;
+}
+
+afficher(somme);
+```
+
+**📤 Sortie :**
+```
+5050
+```
+
+**📝 Explication :**
+- Formule : 1 + 2 + 3 + ... + 100
+- À chaque tour, on ajoute `i` à `somme`
+- Résultat : 5050
+
+**💡 Astuce mathématique :**
+La formule est : `n * (n + 1) / 2 = 100 * 101 / 2 = 5050`
+
+</details>
+
+### ⚡ Exemple 3 : Puissance
+
+<details>
+<summary><b>👁️ Voir le code et l'explication</b></summary>
+
+```galant
+# Calcul de 2^10
+variable base = 2;
+variable exposant = 10;
+variable resultat = 1;
+variable i = 0;
+
+tantque (i < exposant) {
+  resultat = resultat * base;
+  i = i + 1;
+}
+
+afficher(resultat);
+```
+
+**📤 Sortie :**
+```
+1024
+```
+
+**📝 Explication :**
+- On multiplie `resultat` par `base` 10 fois
+- 2¹⁰ = 1024
+
+</details>
+
+### 🔢 Exemple 4 : Recherche de Maximum
+
+<details>
+<summary><b>👁️ Voir le code et l'explication</b></summary>
+
+```galant
+# Trouver le plus grand nombre entre trois valeurs
+variable a = 45;
+variable b = 67;
+variable c = 23;
+variable max = 0;
+
+# Comparer a et b
+si (a > b) {
+  max = a;
+} sinon {
+  max = b;
+}
+
+# Comparer max avec c
+si (c > max) {
+  max = c;
+}
+
+afficher(max);
+```
+
+**📤 Sortie :**
+```
+67
+```
+
+**📝 Algorithme :**
+1. Comparer `a` et `b`, garder le plus grand dans `max`
+2. Comparer `max` avec `c`
+3. Afficher le résultat
+
+</details>
+
+### 🔍 Exemple 5 : Test de Nombre Premier
+
+<details>
+<summary><b>👁️ Voir le code et l'explication</b></summary>
+
+```galant
+# Vérifier si 17 est premier
+variable n = 17;
+variable i = 2;
+variable est_premier = 1;
+
+tantque (i < n) {
+  si (n % i == 0) {
+    est_premier = 0;
+  }
+  i = i + 1;
+}
+
+afficher(est_premier);
+```
+
+**📤 Sortie :**
+```
+1  # Vrai, 17 est premier
+```
+
+**📝 Explication :**
+- Si `n` est divisible par un nombre entre 2 et n-1, il n'est pas premier
+- 17 n'est divisible par aucun nombre, donc premier
+
+</details>
+
+### 📈 Exemple 6 : Suite de Fibonacci
+
+<details>
+<summary><b>👁️ Voir le code et l'explication</b></summary>
+
+```galant
+# Les 10 premiers nombres de Fibonacci
+variable n = 10;
+variable i = 0;
+variable a = 0;
+variable b = 1;
+variable temp = 0;
+
+tantque (i < n) {
+  afficher(a);
+  temp = a + b;
+  a = b;
+  b = temp;
+  i = i + 1;
+}
+```
+
+**📤 Sortie :**
+```
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+```
+
+**📝 Algorithme :**
+```
+F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2)
+```
+
+</details>
+
+---
+
+## 🔍 Comprendre la Sortie
+
+### 📊 Structure de la Sortie
+
+```mermaid
+graph TD
+    A["Code Source"] --> B["Analyse Lexicale"]
+    B --> C["AST"]
+    C --> D["Exécution"]
+    
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000000
+    style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000000
+    style C fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000000
+    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000000
+```
+
+### 1️⃣ Code Source
+
+```
+=== Code Source ===
+variable x = 5;
+afficher(x);
+```
+
+> 📄 Le code source tel qu'il est lu depuis le fichier `.gal`
+
+### 2️⃣ Analyse Lexicale
+
+```
+=== Analyse Lexicale ===
+[v0] Nombre de tokens: 7
+[  0] MOT_CLE         = 'variable' (mot-cle: VARIABLE)
+[  1] IDENTIFICATEUR  = 'x'
+[  2] PONCTUATION     = '='
+[  3] NOMBRE          = '5' (valeur: 5)
+[  4] PONCTUATION     = ';'
+[  5] MOT_CLE         = 'afficher' (mot-cle: AFFICHER)
+[  6] PONCTUATION     = '('
+...
+```
+
+**Détails :**
+- 📝 Liste de tous les tokens (jetons) détectés
+- 🏷️ Type de chaque token
+- 💎 Valeur associée
+- 📍 Position dans le code
+
+### 3️⃣ Analyse Syntaxique (AST)
+
+```
+=== Analyse Syntaxique (AST) ===
+PROGRAMME
+  AFFECTATION [x]
+    NOMBRE [5] (5)
+  AFFICHAGE
+    VARIABLE [x]
+```
+
+**Détails :**
+- 🌳 Arbre de Syntaxe Abstraite (AST)
+- 🏗️ Structure hiérarchique du programme
+- 🔗 Relations entre les instructions
+
+### 4️⃣ Exécution
+
+```
+=== Execution ===
+5
+```
+
+> 🎯 Le résultat de l'exécution du programme
+
+---
+
+## 🐛 Dépannage
+
+### ❌ Erreurs Courantes
+
+#### 1️⃣ Fichier Non Trouvé
+
+<details>
+<summary><b>🔍 Voir la solution</b></summary>
+
+**Erreur :**
+```
+Erreur: impossible d'ouvrir le fichier 'programme.gal'
+```
+
+**✅ Solutions :**
+1. Vérifiez le nom du fichier
+2. Vérifiez l'extension `.gal`
+3. Vérifiez le chemin d'accès
+4. Listez les fichiers : `ls` ou `dir`
+
+**Exemple :**
+```bash
+# Vérifier que le fichier existe
+ls *.gal
+
+# Si le fichier est ailleurs
+./galant-compiler chemin/vers/programme.gal
+```
+
+</details>
+
+#### 2️⃣ Variable Non Déclarée
+
+<details>
+<summary><b>🔍 Voir la solution</b></summary>
+
+**Erreur :**
+```
+Erreur semantique: variable 'x' non declaree
+```
+
+**❌ MAUVAIS :**
+```galant
+afficher(x);  # x n'existe pas
+```
+
+**✅ BON :**
 ```galant
 variable x = 5;
-si (x > 0) {
+afficher(x);
+```
+
+</details>
+
+#### 3️⃣ Variable Non Initialisée
+
+<details>
+<summary><b>🔍 Voir la solution</b></summary>
+
+**Erreur :**
+```
+Erreur semantique: variable 'x' utilisee avant initialisation
+```
+
+**❌ MAUVAIS :**
+```galant
+variable x;
+afficher(x);  # x n'a pas de valeur
+```
+
+**✅ BON :**
+```galant
+variable x = 0;
+afficher(x);
+```
+
+</details>
+
+#### 4️⃣ Division par Zéro
+
+<details>
+<summary><b>🔍 Voir la solution</b></summary>
+
+**Erreur :**
+```
+Erreur semantique: division par zero
+```
+
+**❌ MAUVAIS :**
+```galant
+variable x = 10 / 0;
+```
+
+**✅ BON :**
+```galant
+variable diviseur = 5;
+si (diviseur != 0) {
+  variable x = 10 / diviseur;
   afficher(x);
 }
 ```
 
-**AST Textuel :**
+</details>
+
+#### 5️⃣ Erreur de Syntaxe
+
+<details>
+<summary><b>🔍 Voir la solution</b></summary>
+
+**Erreur :**
 ```
-PROGRAMME
-├── AFFECTATION [x]
-│   └── NOMBRE [5] (5)
-└── CONDITION
-    ├── CONDITION_EXPR [>]
-    │   ├── VARIABLE [x]
-    │   └── NOMBRE [0] (0)
-    └── BLOC
-        └── AFFICHAGE
-            └── VARIABLE [x]
+Erreur syntaxique a la ligne X
 ```
 
-**AST Visuel :**
+**Causes courantes :**
 
-```mermaid
-graph TD
-    A[PROGRAMME] --> B[AFFECTATION x]
-    A --> C[CONDITION]
-    
-    B --> B1[NOMBRE 5]
-    
-    C --> C1[CONDITION_EXPR >]
-    C --> C2[BLOC SI]
-    
-    C1 --> C1A[VARIABLE x]
-    C1 --> C1B[NOMBRE 0]
-    
-    C2 --> C2A[AFFICHAGE]
-    C2A --> C2A1[VARIABLE x]
-    
-    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
-    style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    style C fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style B1 fill:#c8e6c9,stroke:#388e3c
-    style C1 fill:#ffe0b2,stroke:#e64a19
-    style C2 fill:#f8bbd0,stroke:#c2185b
-```
+| Erreur | Exemple | Correction |
+|--------|---------|------------|
+| Oubli `;` | `variable x = 5` | `variable x = 5;` |
+| Parenthèses | `si x > 0) {` | `si (x > 0) {` |
+| Accolades | `tantque (i < 10) {` | Ajouter `}` à la fin |
+| Orthographe | `varable x = 5;` | `variable x = 5;` |
 
-### ⚙️ Algorithme de Parsing
-
-#### Descente Récursive
-
-```mermaid
-graph TD
-    A[parser_analyser] --> B[parser_instruction]
-    B --> C{Type?}
-    
-    C -->|variable| D[parser_affectation]
-    C -->|afficher| E[parser_affichage]
-    C -->|si| F[parser_condition]
-    C -->|tantque| G[parser_boucle]
-    
-    D --> H[parser_expression]
-    E --> H
-    F --> I[parser_condition]
-    G --> I
-    
-    H --> J[parser_terme]
-    J --> K[parser_facteur]
-    
-    style A fill:#4caf50,color:#fff
-    style B fill:#2196f3,color:#fff
-    style H fill:#ff9800,color:#fff
-    style J fill:#e91e63,color:#fff
-    style K fill:#9c27b0,color:#fff
-```
+</details>
 
 ---
 
-## ✅ Phase 3 : Analyse Sémantique
+## ✅ Bonnes Pratiques
 
-### 🎯 Objectif
-
-> Vérifier la **cohérence sémantique** et **exécuter** le programme
-
-### 📁 Fichiers
-
-| Fichier | Rôle |
-|---------|------|
-| `semantic.c` | 🔧 Implémentation |
-| `semantic.h` | 📋 Interface et structures |
-
-### 🏗️ Structures de Données
-
-#### 1️⃣ Variable
-
-```c
-typedef struct {
-    char* nom;          // Nom de la variable
-    int valeur;         // Valeur actuelle
-    int initialise;     // 0 = non initialisée, 1 = initialisée
-} Variable;
-```
-
-**États d'une variable :**
-
-```mermaid
-stateDiagram-v2
-    [*] --> Déclarée: variable x;
-    Déclarée --> Initialisée: x = 5;
-    Initialisée --> Modifiée: x = 10;
-    Modifiée --> Initialisée: x = x + 1;
-    
-    Déclarée --> Erreur: afficher(x)
-    
-    note right of Erreur
-        Variable utilisée
-        avant initialisation
-    end note
-```
-
-#### 2️⃣ Environnement
-
-```c
-#define MAX_VARIABLES 1000
-
-typedef struct {
-    Variable variables[MAX_VARIABLES];  // Tableau de variables
-    int nb_variables;                   // Nombre de variables
-} Environnement;
-```
-
-### ⚙️ Fonctions Principales
-
-#### 🔍 Recherche de Variable
-
-```c
-Variable* semantic_trouver_variable(Environnement* env, const char* nom)
-```
-
-**Algorithme :**
-```
-POUR chaque variable dans l'environnement :
-    SI variable.nom == nom :
-        RETOURNER pointeur vers variable
-RETOURNER NULL
-```
-
-**Complexité :** `O(n)` où n = nombre de variables
-
-**Optimisation possible :** Table de hachage → `O(1)`
-
-#### 📝 Définition de Variable
-
-```c
-void semantic_definir_variable(Environnement* env, const char* nom, int valeur)
-```
-
-**Flux d'exécution :**
-
-```mermaid
-graph TD
-    A[Définir variable] --> B{Variable existe?}
-    B -->|Oui| C[Modifier valeur]
-    B -->|Non| D[Créer nouvelle variable]
-    
-    C --> E[Marquer comme initialisée]
-    D --> F[Ajouter à l'environnement]
-    F --> E
-    E --> G[Fin]
-    
-    style A fill:#2196f3,color:#fff
-    style C fill:#4caf50,color:#fff
-    style D fill:#ff9800,color:#fff
-    style G fill:#4caf50,color:#fff
-```
-
-### 🔄 Évaluation d'Expressions
-
-#### Algorithme Récursif
-
-```c
-static int evaluer_expression(Environnement* env, ASTNode* node)
-```
-
-**Arbre de décision :**
-
-```mermaid
-graph TD
-    A[evaluer_expression] --> B{Type de nœud?}
-    
-    B -->|NOMBRE| C[Retourner valeur]
-    B -->|VARIABLE| D[Chercher dans env]
-    B -->|OPERATEUR| E[Évaluer récursivement]
-    B -->|CONDITION_EXPR| F[Évaluer comparaison]
-    
-    D --> D1{Variable existe?}
-    D1 -->|Non| D2[ERREUR: Non déclarée]
-    D1 -->|Oui| D3{Initialisée?}
-    D3 -->|Non| D4[ERREUR: Non initialisée]
-    D3 -->|Oui| D5[Retourner valeur]
-    
-    E --> E1[Évaluer gauche]
-    E --> E2[Évaluer droite]
-    E1 --> E3[Appliquer opérateur]
-    E2 --> E3
-    
-    style A fill:#2196f3,color:#fff
-    style C fill:#4caf50,color:#fff
-    style D2 fill:#f44336,color:#fff
-    style D4 fill:#f44336,color:#fff
-    style D5 fill:#4caf50,color:#fff
-```
-
-### 🎯 Vérifications Sémantiques
+### 1️⃣ Nommage des Variables
 
 <table>
 <tr>
-<th>🔍 Vérification</th>
-<th>📝 Description</th>
-<th>❌ Erreur</th>
+<th>✅ Bon</th>
+<th>❌ Mauvais</th>
 </tr>
 <tr>
-<td><b>Variable Déclarée</b></td>
-<td>La variable existe dans l'environnement</td>
 <td>
 
-```
-variable 'x' non declaree
+```galant
+variable nombre_etudiants = 25;
+variable somme_totale = 1000;
+variable compteur_iterations = 0;
 ```
 
+**Pourquoi ?**
+- Noms explicites
+- Faciles à comprendre
+- Auto-documentés
+
 </td>
-</tr>
-<tr>
-<td><b>Variable Initialisée</b></td>
-<td>La variable a une valeur assignée</td>
 <td>
 
+```galant
+variable n = 25;
+variable x = 1000;
+variable i = 0;
 ```
-variable 'x' utilisee 
-avant initialisation
-```
+
+**Problème :**
+- Peu explicites
+- Difficiles à maintenir
+- Nécessitent des commentaires
 
 </td>
 </tr>
+</table>
+
+### 2️⃣ Indentation
+
+<table>
 <tr>
-<td><b>Division par Zéro</b></td>
-<td>Le diviseur n'est pas nul</td>
+<th>✅ Bon</th>
+<th>❌ Mauvais</th>
+</tr>
+<tr>
 <td>
 
-```
-division par zero
+```galant
+si (x > 0) {
+  tantque (x < 10) {
+    afficher(x);
+    x = x + 1;
+  }
+}
 ```
 
+**Pourquoi ?**
+- Structure claire
+- Facile à lire
+- Blocs bien identifiés
+
 </td>
-</tr>
-<tr>
-<td><b>Modulo par Zéro</b></td>
-<td>Le modulo n'est pas nul</td>
 <td>
 
+```galant
+si (x > 0) {
+tantque (x < 10) {
+afficher(x);
+x = x + 1;
+}
+}
 ```
-modulo par zero
-```
+
+**Problème :**
+- Structure confuse
+- Difficile à lire
+- Blocs mal délimités
 
 </td>
 </tr>
 </table>
 
----
-
-## 🎯 Module Principal
-
-### 📁 Fichier
-
-- `main.c` - Point d'entrée du compilateur
-
-### 🔄 Flux d'Exécution
-
-```mermaid
-graph TD
-    A[main] --> B[Vérifier arguments]
-    B --> C[Lire fichier]
-    C --> D[Afficher source]
-    D --> E["🔍 Phase 1: Lexer"]
-    E --> F["🌳 Phase 2: Parser"]
-    F --> G["✅ Phase 3: Semantic"]
-    G --> H[Libérer mémoire]
-    H --> I[Fin]
-    
-    B -.->|Erreur| J[Usage]
-    C -.->|Erreur| K[Fichier non trouvé]
-    E -.->|Erreur| L[Erreur lexicale]
-    F -.->|Erreur| M[Erreur syntaxique]
-    G -.->|Erreur| N[Erreur sémantique]
-    
-    style A fill:#4caf50,color:#fff
-    style E fill:#fff3e0,stroke:#f57c00,stroke-width:2px
-    style F fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
-    style G fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
-    style I fill:#4caf50,color:#fff
-    
-    style J fill:#f44336,color:#fff
-    style K fill:#f44336,color:#fff
-    style L fill:#f44336,color:#fff
-    style M fill:#f44336,color:#fff
-    style N fill:#f44336,color:#fff
-```
-
-### 📝 Code Principal
-
-```c
-int main(int argc, char* argv[]) {
-    // 1. Vérification des arguments
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s <fichier.gal>\n", argv[0]);
-        return 1;
-    }
-
-    // 2. Lecture du fichier
-    char* source = lire_fichier(argv[1]);
-
-    // 3. Affichage du code source
-    printf("=== Code Source ===\n%s\n", source);
-
-    // 4. Phase Lexicale
-    Lexer* lexer = lexer_creer(source);
-    lexer_analyser(lexer);
-    lexer_afficher_tokens(lexer);
-
-    // 5. Phase Syntaxique
-    Parser* parser = parser_creer(lexer);
-    ASTNode* ast = parser_analyser(parser);
-    parser_afficher_ast(ast, 0);
-
-    // 6. Phase Sémantique
-    Environnement* env = semantic_creer_env();
-    semantic_executer(env, ast);
-
-    // 7. Libération mémoire
-    semantic_liberer_env(env);
-    parser_liberer_ast(ast);
-    parser_liberer(parser);
-    lexer_liberer(lexer);
-    free(source);
-    
-    return 0;
-}
-```
-
----
-
-## 💾 Gestion Mémoire
-
-### 🎯 Stratégie Générale
-
-```mermaid
-graph LR
-    A[Allocation<br/>dynamique] --> B[Utilisation]
-    B --> C[Expansion<br/>si nécessaire]
-    C --> D[Libération<br/>explicite]
-    
-    style A fill:#4caf50,color:#fff
-    style B fill:#2196f3,color:#fff
-    style C fill:#ff9800,color:#fff
-    style D fill:#f44336,color:#fff
-```
-
-### 📊 Par Module
-
-#### 🔍 Lexer
-
-```c
-// ✅ Allocation
-lexer->tokens = malloc(100 * sizeof(Token));
-
-// 📈 Expansion (doublement de capacité)
-if (lexer->nb_tokens >= lexer->capacite) {
-    lexer->capacite *= 2;
-    lexer->tokens = realloc(lexer->tokens, 
-                           lexer->capacite * sizeof(Token));
-}
-
-// 🧹 Libération
-for (int i = 0; i < lexer->nb_tokens; i++) {
-    free(lexer->tokens[i].valeur);
-}
-free(lexer->tokens);
-free(lexer);
-```
-
-**Croissance de la capacité :**
-
-```
-Capacité initiale: 100
-Token 100: ×2 → 200
-Token 200: ×2 → 400
-Token 400: ×2 → 800
-...
-```
-
-#### 🌳 Parser
-
-```c
-// ✅ Allocation des enfants
-node->enfants = malloc(10 * sizeof(ASTNode*));
-
-// 📈 Expansion
-if (node->nb_enfants >= node->capacite) {
-    node->capacite *= 2;
-    node->enfants = realloc(node->enfants, 
-                           node->capacite * sizeof(ASTNode*));
-}
-
-// 🧹 Libération (récursive)
-void parser_liberer_ast(ASTNode* node) {
-    if (!node) return;
-    
-    // Libérer récursivement les enfants
-    for (int i = 0; i < node->nb_enfants; i++) {
-        parser_liberer_ast(node->enfants[i]);
-    }
-    
-    // Libérer les nœuds spéciaux
-    if (node->condition) parser_liberer_ast(node->condition);
-    if (node->bloc_si) parser_liberer_ast(node->bloc_si);
-    if (node->bloc_sinon) parser_liberer_ast(node->bloc_sinon);
-    
-    // Libérer le nœud lui-même
-    free(node->valeur);
-    free(node->enfants);
-    free(node);
-}
-```
-
-#### ✅ Semantic
-
-```c
-// ✅ Environnement : tableau fixe
-Variable variables[MAX_VARIABLES];
-
-// 🧹 Libération
-for (int i = 0; i < env->nb_variables; i++) {
-    free(env->variables[i].nom);
-}
-free(env);
-```
-
-### ⚠️ Prévention des Fuites Mémoire
+### 3️⃣ Commentaires
 
 <table>
 <tr>
-<th>✅ Bonne Pratique</th>
-<th>📝 Description</th>
+<th>✅ Bon</th>
+<th>❌ Mauvais</th>
 </tr>
 <tr>
-<td><b>Ordre de libération</b></td>
-<td>Libérer les enfants avant les parents (récursif)</td>
-</tr>
-<tr>
-<td><b>Vérification NULL</b></td>
-<td>Toujours vérifier avant <code>free()</code></td>
-</tr>
-<tr>
-<td><b>Pas de double free</b></td>
-<td>Ne jamais libérer deux fois la même mémoire</td>
-</tr>
-<tr>
-<td><b>Libération complète</b></td>
-<td>Libérer tous les pointeurs alloués</td>
-</tr>
-</table>
+<td>
 
----
-
-## 🐛 Gestion des Erreurs
-
-### 📊 Types d'Erreurs
-
-```mermaid
-graph TD
-    A[Erreurs] --> B[Lexicales]
-    A --> C[Syntaxiques]
-    A --> D[Sémantiques]
-    
-    B --> B1[Caractère invalide]
-    B --> B2[Token malformé]
-    
-    C --> C1[Syntaxe incorrecte]
-    C --> C2[Parenthèses non fermées]
-    C --> C3[Point-virgule manquant]
-    
-    D --> D1[Variable non déclarée]
-    D --> D2[Variable non initialisée]
-    D --> D3[Division par zéro]
-    
-    style A fill:#1976d2,color:#fff
-    style B fill:#ff9800,color:#fff
-    style C fill:#f44336,color:#fff
-    style D fill:#e91e63,color:#fff
+```galant
+# Calcul de la moyenne de trois notes
+variable note1 = 15;
+variable note2 = 18;
+variable note3 = 12;
+variable moyenne = (note1 + note2 + note3) / 3;
 ```
 
-### 🔧 Mécanisme d'Erreur
-
-#### Flag Global
-
-```c
-static int error_flag = 0;  // Variable globale statique
-```
-
-**États du flag :**
-
-```mermaid
-stateDiagram-v2
-    [*] --> Normal: Initialisation
-    Normal --> Erreur: Erreur détectée
-    Erreur --> [*]: Fin d'exécution
-    
-    note right of Normal
-        error_flag = 0
-        Exécution continue
-    end note
-    
-    note right of Erreur
-        error_flag = 1
-        Exécution arrêtée
-    end note
-```
-
-#### Propagation des Erreurs
-
-```c
-// ✅ Définir l'erreur
-if (condition_erreur) {
-    fprintf(stderr, "Erreur: %s\n", message);
-    error_flag = 1;
-    return;
-}
-
-// ✅ Vérifier l'erreur
-if (error_flag) return;  // Arrêter l'exécution
-```
-
-### 📝 Messages d'Erreur
-
-<table>
-<tr>
-<th>Type</th>
-<th>Message</th>
-<th>Action</th>
-</tr>
-<tr>
-<td>🔍 Lexicale</td>
-<td><code>Caractère invalide '@' à la ligne 5</code></td>
-<td>Corriger le caractère</td>
-</tr>
-<tr>
-<td>🌳 Syntaxique</td>
-<td><code>Erreur syntaxique à la ligne 10<br/>Point-virgule attendu</code></td>
-<td>Ajouter <code>;</code></td>
-</tr>
-<tr>
-<td>✅ Sémantique</td>
-<td><code>Erreur semantique:<br/>variable 'x' non declaree</code></td>
-<td>Déclarer la variable</td>
-</tr>
-</table>
-
----
-
-## 📊 Complexité et Performance
-
-### 🎯 Analyse de Complexité
-
-| Phase | ⏱️ Temporelle | 💾 Spatiale | 📝 Détails |
-|-------|--------------|------------|----------|
-| **🔍 Lexer** | `O(n)` | `O(n)` | n = longueur du code |
-| **🌳 Parser** | `O(m)` | `O(m)` | m = nombre de tokens |
-| **✅ Semantic** | `O(i × d)` | `O(v)` | i = itérations, d = profondeur AST, v = variables |
-
-### 📈 Graphique de Performance
-
-```
-Temps d'exécution (ms)
-│
-│     ╱
-│    ╱ Semantic (O(i×d))
-│   ╱
-│  ╱  Parser (O(m))
-│ ╱
-│╱ Lexer (O(n))
-└──────────────────── Taille du programme
-```
-
-### 🚀 Optimisations Possibles
-
-<table>
-<tr>
-<th>🎯 Optimisation</th>
-<th>📊 Gain</th>
-<th>💡 Description</th>
-</tr>
-<tr>
-<td><b>Table de hachage</b></td>
-<td><code>O(1)</code> au lieu de <code>O(n)</code></td>
-<td>Pour la recherche de variables</td>
-</tr>
-<tr>
-<td><b>Pool de mémoire</b></td>
-<td>Allocation plus rapide</td>
-<td>Pour les nœuds AST</td>
-</tr>
-<tr>
-<td><b>Compilation JIT</b></td>
-<td>Exécution plus rapide</td>
-<td>Compiler en code machine</td>
-</tr>
-<tr>
-<td><b>Cache d'expressions</b></td>
-<td>Éviter recalculs</td>
-<td>Pour expressions constantes</td>
-</tr>
-</table>
-
-### ⚠️ Limitations Actuelles
-
-```
-┌─────────────────────────────────────────┐
-│ MAX_VARIABLES = 1000                    │
-│ → Tableau fixe, pas dynamique           │
-├─────────────────────────────────────────┤
-│ Recherche linéaire O(n)                 │
-│ → Pas de table de hachage               │
-├─────────────────────────────────────────┤
-│ Pas d'optimisation de l'AST             │
-│ → Expressions non simplifiées           │
-├─────────────────────────────────────────┤
-│ Interprétation pure                     │
-│ → Pas de compilation vers code machine  │
-└─────────────────────────────────────────┘
-```
-
----
-
-## 🛠️ Technologies Utilisées
-
-<table>
-<tr>
-<td align="center">
-
-### 📝 Langage
-![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
-
-C99 Standard
+**Pourquoi ?**
+- Explique l'intention
+- Commentaire utile
+- Code clair
 
 </td>
-<td align="center">
+<td>
 
-### 🔨 Compilateur
-![GCC](https://img.shields.io/badge/GCC-4.8+-orange?style=for-the-badge)
+```galant
+variable n1 = 15;  # note 1
+variable n2 = 18;  # note 2
+variable n3 = 12;  # note 3
+variable m = (n1 + n2 + n3) / 3;  # moyenne
+```
 
-GNU Compiler Collection
-
-</td>
-<td align="center">
-
-### ⚙️ Build System
-![Make](https://img.shields.io/badge/Make-GNU-red?style=for-the-badge)
-
-GNU Make
+**Problème :**
+- Commentaires évidents
+- Noms cryptiques
+- Redondant
 
 </td>
 </tr>
 </table>
 
-**Plateformes supportées :**
-- 🐧 Linux
-- 🪟 Windows (via MinGW/WSL)
-- 🍎 macOS
+### 4️⃣ Organisation du Code
+
+```galant
+# ====================================
+# Programme : Calcul de somme
+# Auteur : [Votre nom]
+# Date : [Date]
+# ====================================
+
+# --- Déclarations ---
+variable x = 0;
+variable y = 0;
+variable resultat = 0;
+
+# --- Traitement principal ---
+tantque (x < 10) {
+  y = x * 2;
+  resultat = resultat + y;
+  x = x + 1;
+}
+
+# --- Affichage final ---
+afficher(resultat);
+```
+
+### 5️⃣ Éviter les Boucles Infinies
+
+| ✅ Bon | ❌ Mauvais |
+|--------|-----------|
+| `variable i = 0;`<br/>`tantque (i < 10) {`<br/>`  afficher(i);`<br/>`  i = i + 1;  # ✅ Incrémentation`<br/>`}` | `variable i = 0;`<br/>`tantque (i < 10) {`<br/>`  afficher(i);`<br/>`  # ❌ Oubli d'incrémentation`<br/>`}` |
 
 ---
 
-## 🎨 Diagrammes de Flux
+## 📋 Template de Démarrage
 
-### 🔄 Cycle de Vie Complet
+```galant
+# ============================================
+# Nom du programme : [Votre titre]
+# Description : [Ce que fait le programme]
+# Auteur : [Votre nom]
+# Date : [Date]
+# ============================================
 
-```mermaid
-sequenceDiagram
-    participant U as Utilisateur
-    participant M as main.c
-    participant L as Lexer
-    participant P as Parser
-    participant S as Semantic
-    
-    U->>M: ./galant-compiler prog.gal
-    M->>M: Lire fichier
-    M->>L: lexer_creer(source)
-    L-->>M: Lexer*
-    M->>L: lexer_analyser()
-    L->>L: Tokenization
-    L-->>M: Tokens[]
-    
-    M->>P: parser_creer(lexer)
-    P-->>M: Parser*
-    M->>P: parser_analyser()
-    P->>P: Construire AST
-    P-->>M: ASTNode*
-    
-    M->>S: semantic_creer_env()
-    S-->>M: Environnement*
-    M->>S: semantic_executer(env, ast)
-    S->>S: Exécuter programme
-    S-->>M: Résultat
-    
-    M->>M: Libérer mémoire
-    M-->>U: Sortie finale
+# --- Déclaration des variables ---
+variable x = 0;
+variable y = 0;
+variable resultat = 0;
+
+# --- Traitement principal ---
+tantque (x < 10) {
+  # Votre logique ici
+  x = x + 1;
+}
+
+# --- Affichage des résultats ---
+afficher(resultat);
 ```
 
 ---
 
-## 📚 Ressources
+## 📚 Ressources Supplémentaires
 
 | 📄 Document | 📝 Description |
 |------------|---------------|
 | [README.md](README.md) | Vue d'ensemble du projet |
-| [GUIDE_UTILISATION.md](GUIDE_UTILISATION.md) | Guide utilisateur complet |
-| [LICENSE](LICENSE) | Licence MIT |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Documentation technique détaillée |
+| `exemples/` | Dossier avec programmes d'exemple |
 
 ---
 
-## 🎯 Conclusion
+## 🆘 Aide et Support
 
-L'architecture de GALANT suit les **principes classiques** de construction de compilateur tout en restant **simple et éducative**. Chaque phase est clairement séparée, facilitant la compréhension et la maintenance.
+### 🛠️ Commandes Utiles
 
-### 🌟 Points Forts
+```bash
+# Voir l'aide de Make
+make help
 
-- ✅ **Modularité** - Séparation claire des responsabilités
-- ✅ **Clarté** - Code lisible et bien documenté
-- ✅ **Robustesse** - Gestion complète des erreurs
-- ✅ **Éducatif** - Idéal pour l'apprentissage
+# Nettoyer et recompiler
+make clean && make
 
-### 🚀 Extensions Possibles
+# Exécuter le programme par défaut
+make run
+```
 
-- 📝 Fonctions définies par l'utilisateur
-- 📚 Tableaux et structures de données
-- 🔗 Opérateurs logiques (ET, OU, NON)
-- 💾 Génération de code assembleur
-- 🐛 Débogueur intégré
+### 🐛 Débogage
+
+```mermaid
+graph TD
+    A[Problème détecté] --> B{Type d erreur?}
+    B -->|Lexicale| C[Vérifier les tokens]
+    B -->|Syntaxique| D[Vérifier AST]
+    B -->|Sémantique| E[Vérifier les variables]
+    C --> F[Corriger et retester]
+    D --> F
+    E --> F
+    
+    style A fill:#ff5252,stroke:#c62828,stroke-width:2px,color:#ffffff
+    style F fill:#4caf50,stroke:#2e7d32,stroke-width:2px,color:#ffffff
+```
+
+**Processus de débogage :**
+
+1. 🔍 **Vérifiez la section "Analyse Lexicale"** pour voir si les tokens sont corrects
+2. 🌳 **Vérifiez l'AST** pour voir si la structure est bonne
+3. 📖 **Lisez les messages d'erreur** attentivement
+4. 🧪 **Testez avec un programme simple** d'abord
 
 ---
 
 <div align="center">
 
-**Documentation technique complète pour GALANT** 🧠
+**Bon apprentissage avec GALANT ! 🚀📚**
 
 [![Retour au README](https://img.shields.io/badge/←_Retour_au-README-blue?style=for-the-badge)](README.md)
-[![Guide](https://img.shields.io/badge/Guide-Utilisation-green?style=for-the-badge)](GUIDE_UTILISATION.md)
+[![Architecture](https://img.shields.io/badge/Documentation-Architecture-purple?style=for-the-badge)](ARCHITECTURE.md)
 
 ---
 
