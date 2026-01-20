@@ -1,57 +1,116 @@
 # 🧠 Architecture du Compilateur GALANT
 
-> Documentation technique complète du compilateur éducatif GALANT
+<div align="center">
+
+![Architecture](https://img.shields.io/badge/GALANT-Architecture-purple?style=for-the-badge&logo=hackthebox&logoColor=white)
+[![Complexité](https://img.shields.io/badge/Complexité-O(n)-green?style=for-the-badge)](.)
+[![Langage](https://img.shields.io/badge/Langage-C99-orange?style=for-the-badge&logo=c)](.)
+
+*Documentation technique complète du compilateur éducatif GALANT*
+
+</div>
 
 ---
 
-## Table des Matières
+## 📑 Table des Matières
 
-1. [Vue d'Ensemble](#vue-densemble)
-2. [Phase 1 : Analyse Lexicale](#phase-1--analyse-lexicale)
-3. [Phase 2 : Analyse Syntaxique](#phase-2--analyse-syntaxique)
-4. [Phase 3 : Analyse Sémantique](#phase-3--analyse-sémantique)
-5. [Module Principal](#module-principal)
-6. [Gestion Mémoire](#gestion-mémoire)
-7. [Gestion des Erreurs](#gestion-des-erreurs)
-8. [Complexité et Performance](#complexité-et-performance)
+| 🔷 Section | 📝 Description |
+|-----------|---------------|
+| [🌐 Vue d'Ensemble](#-vue-densemble) | Architecture globale |
+| [🔍 Phase 1 : Lexer](#-phase-1--analyse-lexicale) | Analyse lexicale (tokens) |
+| [🌳 Phase 2 : Parser](#-phase-2--analyse-syntaxique) | Analyse syntaxique (AST) |
+| [✅ Phase 3 : Semantic](#-phase-3--analyse-sémantique) | Analyse sémantique et exécution |
+| [🎯 Module Principal](#-module-principal) | Point d'entrée (main.c) |
+| [💾 Gestion Mémoire](#-gestion-mémoire) | Allocation et libération |
+| [🐛 Gestion des Erreurs](#-gestion-des-erreurs) | Détection et traitement |
+| [📊 Performance](#-complexité-et-performance) | Analyse de complexité |
 
 ---
 
-## Vue d'Ensemble
+## 🌐 Vue d'Ensemble
 
-### Architecture Globale
+### 🏗️ Architecture Globale
 
 ```mermaid
-flowchart TD
-    A[Code Source gal] --> B[Phase 1 Lexical Analysis<br/>Lexer<br/>Token generation<br/>Keyword recognition]
-    B -->|Tokens| C[Phase 2 Syntax Analysis<br/>Parser<br/>Grammar validation<br/>AST construction]
-    C -->|AST| D[Phase 3 Semantic Analysis<br/>Variable checks<br/>Expression evaluation<br/>Execution]
-    D --> E[Result]
+graph TB
+    A["📝 Code Source<br/>.gal"] --> B["🔍 Phase 1<br/>LEXER<br/>Tokenization"]
+    B --> C["🌳 Phase 2<br/>PARSER<br/>AST Construction"]
+    C --> D["✅ Phase 3<br/>SEMANTIC<br/>Execution"]
+    D --> E["📤 Résultat"]
+    
+    B -.->|Erreur| F["❌ Erreur Lexicale"]
+    C -.->|Erreur| G["❌ Erreur Syntaxique"]
+    D -.->|Erreur| H["❌ Erreur Sémantique"]
+    
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:3px,color:#000
+    style B fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
+    style C fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px,color:#000
+    style D fill:#e8f5e9,stroke:#388e3c,stroke-width:3px,color:#000
+    style E fill:#fff9c4,stroke:#f57f17,stroke-width:3px,color:#000
+    style F fill:#ffcdd2,stroke:#c62828,color:#000
+    style G fill:#ffcdd2,stroke:#c62828,color:#000
+    style H fill:#ffcdd2,stroke:#c62828,color:#000
 ```
 
-### Principes de Conception
+### 🎯 Principes de Conception
 
-1. **Modularité** - Chaque phase est indépendante
-2. **Clarté** - Code lisible et bien commenté
-3. **Robustesse** - Gestion complète des erreurs
-4. **Éducatif** - Structure facile à comprendre
+<table>
+<tr>
+<td width="50%">
+
+#### 🧩 Modularité
+- Chaque phase est indépendante
+- Interfaces claires entre modules
+- Facilite la maintenance et l'évolution
+
+</td>
+<td width="50%">
+
+#### 🔬 Clarté
+- Code lisible et bien commenté
+- Nommage explicite
+- Documentation intégrée
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+#### 🛡️ Robustesse
+- Gestion complète des erreurs
+- Validation à chaque étape
+- Messages d'erreur informatifs
+
+</td>
+<td width="50%">
+
+#### 🎓 Éducatif
+- Structure facile à comprendre
+- Commentaires pédagogiques
+- Exemples intégrés
+
+</td>
+</tr>
+</table>
 
 ---
 
-## Phase 1 : Analyse Lexicale
+## 🔍 Phase 1 : Analyse Lexicale
 
-### Objectif
+### 🎯 Objectif
 
-Transformer le code source en une séquence de **tokens** (jetons lexicaux).
+> Transformer le code source en une séquence de **tokens** (jetons lexicaux)
 
-### Fichiers
+### 📁 Fichiers
 
-- `lexer.c` - Implémentation
-- `lexer.h` - Interface et structures
+| Fichier | Rôle |
+|---------|------|
+| `lexer.c` | 🔧 Implémentation |
+| `lexer.h` | 📋 Interface et structures |
 
-### Structures de Données
+### 🏗️ Structures de Données
 
-#### Énumération TokenType
+#### 1️⃣ TokenType - Types de Tokens
 
 ```c
 typedef enum {
@@ -66,7 +125,7 @@ typedef enum {
 } TokenType;
 ```
 
-#### Énumération MotCle
+#### 2️⃣ MotCle - Mots-clés du Langage
 
 ```c
 typedef enum {
@@ -79,7 +138,7 @@ typedef enum {
 } MotCle;
 ```
 
-#### Structure Token
+#### 3️⃣ Token - Structure d'un Token
 
 ```c
 typedef struct {
@@ -92,7 +151,21 @@ typedef struct {
 } Token;
 ```
 
-#### Structure Lexer
+**Représentation visuelle :**
+
+```
+┌─────────────────────────────────────┐
+│ Token                               │
+├─────────────────────────────────────┤
+│ type:    TOKEN_MOT_CLE              │
+│ valeur:  "variable"                 │
+│ ligne:   1                          │
+│ colonne: 1                          │
+│ mot_cle: KW_VARIABLE                │
+└─────────────────────────────────────┘
+```
+
+#### 4️⃣ Lexer - Structure Principale
 
 ```c
 typedef struct {
@@ -106,28 +179,60 @@ typedef struct {
 } Lexer;
 ```
 
-### Fonctions Principales
+### ⚙️ Fonctions Principales
 
-#### 1. Création et Initialisation
+#### 🔨 Création du Lexer
 
 ```c
 Lexer* lexer_creer(const char* source)
 ```
 
 **Responsabilités :**
-- Allouer la mémoire pour le lexer
-- Initialiser la position à 0
-- Créer le tableau de tokens (capacité initiale : 100)
+- ✅ Allouer la mémoire pour le lexer
+- ✅ Initialiser la position à 0
+- ✅ Créer le tableau de tokens (capacité : 100)
 
-**Complexité :** O(1)
+**Complexité :** `O(1)`
 
-#### 2. Analyse Lexicale
+#### 🔍 Analyse Lexicale
 
 ```c
 void lexer_analyser(Lexer* lexer)
 ```
 
-**Algorithme :**
+**Algorithme détaillé :**
+
+```mermaid
+graph TD
+    A[Début] --> B{Fin du fichier?}
+    B -->|Non| C[Lire caractère]
+    B -->|Oui| Z[Ajouter TOKEN_EOF]
+    
+    C --> D{Type?}
+    D -->|Espace/\n| B
+    D -->|#| E[Ignorer commentaire]
+    D -->|Chiffre| F[lire_nombre]
+    D -->|Lettre| G[lire_identificateur]
+    D -->|Opérateur| H[lire_operateur]
+    D -->|Ponctuation| I[Créer token]
+    D -->|Autre| J[TOKEN_ERREUR]
+    
+    E --> B
+    F --> K[Ajouter token]
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+    K --> B
+    
+    Z --> W[Fin]
+    
+    style A fill:#4caf50,color:#fff
+    style W fill:#4caf50,color:#fff
+    style J fill:#f44336,color:#fff
+```
+
+**Pseudo-code :**
 
 ```
 TANT QUE pas fin du fichier :
@@ -159,77 +264,60 @@ TANT QUE pas fin du fichier :
 AJOUTER TOKEN_EOF à la fin
 ```
 
-**Complexité :** O(n) où n = longueur du code source
+**Complexité :** `O(n)` où n = longueur du code source
 
-#### 3. Fonctions Auxiliaires
-
-```c
-static char lexer_peek(Lexer* lexer)
-```
-- Regarde le caractère actuel sans avancer
-
-```c
-static char lexer_peek_next(Lexer* lexer)
-```
-- Regarde le caractère suivant
-
-```c
-static void lexer_lire_nombre(Lexer* lexer, Token* token)
-```
-- Lit une séquence de chiffres
-- Convertit en entier avec `atoi()`
-
-```c
-static void lexer_lire_identificateur(Lexer* lexer, Token* token)
-```
-- Lit lettres, chiffres et underscores
-- Vérifie si c'est un mot-clé
-
-```c
-static MotCle lexer_est_mot_cle(const char* str)
-```
-- Compare avec les mots-clés du langage
-- Retourne `KW_NONE` si ce n'est pas un mot-clé
-
-### Exemple de Tokenization
+### 📊 Exemple de Tokenization
 
 **Entrée :**
 ```galant
 variable x = 5;
 ```
 
+**Processus :**
+
+```mermaid
+graph LR
+    A["variable"] --> B["x"]
+    B --> C["="]
+    C --> D["5"]
+    D --> E[";"]
+    
+    style A fill:#f3e5f5
+    style B fill:#e1f5ff
+    style C fill:#fff3e0
+    style D fill:#c8e6c9
+    style E fill:#fff9c4
+```
+
 **Sortie (Tokens) :**
-```
-[0] TOKEN_MOT_CLE        = "variable" (KW_VARIABLE)
-[1] TOKEN_IDENTIFICATEUR = "x"
-[2] TOKEN_PONCTUATION    = "="
-[3] TOKEN_NOMBRE         = "5" (valeur: 5)
-[4] TOKEN_PONCTUATION    = ";"
-[5] TOKEN_EOF            = ""
-```
 
-### Gestion des Erreurs
-
-- **Caractère invalide** → `TOKEN_ERREUR`
-- **Nombre mal formé** → Continue avec ce qui a été lu
-- **Chaîne non fermée** → Pas supporté dans GALANT
+| Index | Type | Valeur | Détails |
+|-------|------|--------|---------|
+| `[0]` | `TOKEN_MOT_CLE` | `"variable"` | KW_VARIABLE |
+| `[1]` | `TOKEN_IDENTIFICATEUR` | `"x"` | - |
+| `[2]` | `TOKEN_PONCTUATION` | `"="` | - |
+| `[3]` | `TOKEN_NOMBRE` | `"5"` | valeur: 5 |
+| `[4]` | `TOKEN_PONCTUATION` | `";"` | - |
+| `[5]` | `TOKEN_EOF` | `""` | - |
 
 ---
 
-## Phase 2 : Analyse Syntaxique
+## 🌳 Phase 2 : Analyse Syntaxique
 
-### Objectif
+### 🎯 Objectif
 
-Construire un **Arbre de Syntaxe Abstraite (AST)** représentant la structure du programme.
+> Construire un **Arbre de Syntaxe Abstraite (AST)** représentant la structure du programme
 
-### Fichiers
+### 📁 Fichiers
 
-- `parser.c` - Implémentation
-- `parser.h` - Interface et structures
+| Fichier | Rôle |
+|---------|------|
+| `parser.c` | 🔧 Implémentation |
+| `parser.h` | 📋 Interface et structures |
 
-### Structures de Données
+### 🏗️ Structures de Données
 
-#### Énumération ASTNodeType
+#### 1️⃣ ASTNodeType - Types de Nœuds
 
 ```c
 typedef enum {
@@ -247,7 +335,7 @@ typedef enum {
 } ASTNodeType;
 ```
 
-#### Structure ASTNode
+#### 2️⃣ ASTNode - Nœud de l'AST
 
 ```c
 typedef struct ASTNode {
@@ -263,16 +351,20 @@ typedef struct ASTNode {
 } ASTNode;
 ```
 
-#### Structure Parser
+**Représentation visuelle d'un nœud :**
 
-```c
-typedef struct {
-    Lexer* lexer;    // Référence au lexer
-    int pos;         // Position dans les tokens
-} Parser;
+```
+┌──────────────────────────────────────┐
+│ ASTNode                              │
+├──────────────────────────────────────┤
+│ type:      AST_AFFECTATION           │
+│ valeur:    "x"                       │
+│ enfants[]: [NOMBRE(5)]               │
+│ nb_enfants: 1                        │
+└──────────────────────────────────────┘
 ```
 
-### Grammaire du Langage
+### 📖 Grammaire du Langage
 
 #### Notation EBNF
 
@@ -309,137 +401,7 @@ facteur          ::= NOMBRE
 operateur_comp   ::= "==" | "!=" | ">" | "<" | ">=" | "<="
 ```
 
-### Fonctions Principales
-
-#### 1. Création du Parser
-
-```c
-Parser* parser_creer(Lexer* lexer)
-```
-
-**Responsabilités :**
-- Allouer le parser
-- Initialiser la position à 0
-
-#### 2. Analyse Syntaxique
-
-```c
-ASTNode* parser_analyser(Parser* parser)
-```
-
-**Algorithme :**
-
-```
-créer nœud PROGRAMME
-TANT QUE token actuel != EOF :
-    instruction ← parser_instruction()
-    ajouter instruction au programme
-RETOURNER programme
-```
-
-#### 3. Parsing d'Instructions
-
-```c
-static ASTNode* parser_instruction(Parser* parser)
-```
-
-**Analyse par cas :**
-
-1. **TOKEN_MOT_CLE = "variable"**
-   ```
-   consommer "variable"
-   lire IDENTIFICATEUR
-   SI token = "=" :
-       consommer "="
-       expr ← parser_expression()
-       créer AFFECTATION avec expr
-   SINON :
-       créer AFFECTATION sans enfants (déclaration)
-   consommer ";"
-   ```
-
-2. **TOKEN_MOT_CLE = "afficher"**
-   ```
-   consommer "afficher"
-   consommer "("
-   expr ← parser_expression()
-   consommer ")"
-   consommer ";"
-   créer AFFICHAGE avec expr
-   ```
-
-3. **TOKEN_MOT_CLE = "si"**
-   ```
-   consommer "si"
-   consommer "("
-   cond ← parser_condition()
-   consommer ")"
-   bloc_si ← parser_bloc()
-   SI token = "sinon" :
-       consommer "sinon"
-       bloc_sinon ← parser_bloc()
-   créer CONDITION avec cond, bloc_si, bloc_sinon
-   ```
-
-4. **TOKEN_MOT_CLE = "tantque"**
-   ```
-   consommer "tantque"
-   consommer "("
-   cond ← parser_condition()
-   consommer ")"
-   bloc ← parser_bloc()
-   créer BOUCLE avec cond, bloc
-   ```
-
-#### 4. Parsing d'Expressions
-
-```c
-static ASTNode* parser_expression(Parser* parser)
-```
-
-**Algorithme (descente récursive) :**
-
-```
-gauche ← parser_terme()
-TANT QUE token est "+" ou "-" :
-    op ← consommer opérateur
-    droite ← parser_terme()
-    créer nœud OPERATEUR(op, gauche, droite)
-    gauche ← nouveau nœud
-RETOURNER gauche
-```
-
-```c
-static ASTNode* parser_terme(Parser* parser)
-```
-
-```
-gauche ← parser_facteur()
-TANT QUE token est "*", "/" ou "%" :
-    op ← consommer opérateur
-    droite ← parser_facteur()
-    créer nœud OPERATEUR(op, gauche, droite)
-    gauche ← nouveau nœud
-RETOURNER gauche
-```
-
-```c
-static ASTNode* parser_facteur(Parser* parser)
-```
-
-```
-SI token = NOMBRE :
-    créer nœud NOMBRE
-SINON SI token = IDENTIFICATEUR :
-    créer nœud VARIABLE
-SINON SI token = "(" :
-    consommer "("
-    expr ← parser_expression()
-    consommer ")"
-    RETOURNER expr
-```
-
-### Exemple d'AST
+### 🎨 Exemple d'AST
 
 **Code :**
 ```galant
@@ -449,48 +411,93 @@ si (x > 0) {
 }
 ```
 
-**AST :**
-```mermaid
-flowchart TD
-    P[PROGRAMME]
-
-    P --> A[AFFECTATION]
-    A --> AX[VARIABLE x]
-    A --> N5[NOMBRE 5]
-
-    P --> C[CONDITION]
-
-    C --> CE[CONDITION_EXPR >]
-    CE --> VX[VARIABLE x]
-    CE --> N0[NOMBRE 0]
-
-    C --> BI[BLOC SI]
-    BI --> AF[AFFICHAGE]
-    AF --> VX2[VARIABLE x]
+**AST Textuel :**
+```
+PROGRAMME
+├── AFFECTATION [x]
+│   └── NOMBRE [5] (5)
+└── CONDITION
+    ├── CONDITION_EXPR [>]
+    │   ├── VARIABLE [x]
+    │   └── NOMBRE [0] (0)
+    └── BLOC
+        └── AFFICHAGE
+            └── VARIABLE [x]
 ```
 
-### Gestion des Erreurs
+**AST Visuel :**
 
-- **Token inattendu** → Message d'erreur avec position
-- **Parenthèse non fermée** → Détecté lors du parsing
-- **Instruction incomplète** → Signalée
+```mermaid
+graph TD
+    A[PROGRAMME] --> B[AFFECTATION x]
+    A --> C[CONDITION]
+    
+    B --> B1[NOMBRE 5]
+    
+    C --> C1[CONDITION_EXPR >]
+    C --> C2[BLOC SI]
+    
+    C1 --> C1A[VARIABLE x]
+    C1 --> C1B[NOMBRE 0]
+    
+    C2 --> C2A[AFFICHAGE]
+    C2A --> C2A1[VARIABLE x]
+    
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style B fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style C fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style B1 fill:#c8e6c9,stroke:#388e3c
+    style C1 fill:#ffe0b2,stroke:#e64a19
+    style C2 fill:#f8bbd0,stroke:#c2185b
+```
+
+### ⚙️ Algorithme de Parsing
+
+#### Descente Récursive
+
+```mermaid
+graph TD
+    A[parser_analyser] --> B[parser_instruction]
+    B --> C{Type?}
+    
+    C -->|variable| D[parser_affectation]
+    C -->|afficher| E[parser_affichage]
+    C -->|si| F[parser_condition]
+    C -->|tantque| G[parser_boucle]
+    
+    D --> H[parser_expression]
+    E --> H
+    F --> I[parser_condition]
+    G --> I
+    
+    H --> J[parser_terme]
+    J --> K[parser_facteur]
+    
+    style A fill:#4caf50,color:#fff
+    style B fill:#2196f3,color:#fff
+    style H fill:#ff9800,color:#fff
+    style J fill:#e91e63,color:#fff
+    style K fill:#9c27b0,color:#fff
+```
 
 ---
 
-## Phase 3 : Analyse Sémantique
+## ✅ Phase 3 : Analyse Sémantique
 
-### Objectif
+### 🎯 Objectif
 
-Vérifier la **cohérence sémantique** et **exécuter** le programme.
+> Vérifier la **cohérence sémantique** et **exécuter** le programme
 
-### Fichiers
+### 📁 Fichiers
 
-- `semantic.c` - Implémentation
-- `semantic.h` - Interface et structures
+| Fichier | Rôle |
+|---------|------|
+| `semantic.c` | 🔧 Implémentation |
+| `semantic.h` | 📋 Interface et structures |
 
-### Structures de Données
+### 🏗️ Structures de Données
 
-#### Structure Variable
+#### 1️⃣ Variable
 
 ```c
 typedef struct {
@@ -500,7 +507,24 @@ typedef struct {
 } Variable;
 ```
 
-#### Structure Environnement
+**États d'une variable :**
+
+```mermaid
+stateDiagram-v2
+    [*] --> Déclarée: variable x;
+    Déclarée --> Initialisée: x = 5;
+    Initialisée --> Modifiée: x = 10;
+    Modifiée --> Initialisée: x = x + 1;
+    
+    Déclarée --> Erreur: afficher(x)
+    
+    note right of Erreur
+        Variable utilisée
+        avant initialisation
+    end note
+```
+
+#### 2️⃣ Environnement
 
 ```c
 #define MAX_VARIABLES 1000
@@ -511,20 +535,9 @@ typedef struct {
 } Environnement;
 ```
 
-### Fonctions Principales
+### ⚙️ Fonctions Principales
 
-#### 1. Création de l'Environnement
-
-```c
-Environnement* semantic_creer_env(void)
-```
-
-**Responsabilités :**
-- Allouer l'environnement
-- Initialiser nb_variables à 0
-- Réinitialiser le flag d'erreur global
-
-#### 2. Gestion des Variables
+#### 🔍 Recherche de Variable
 
 ```c
 Variable* semantic_trouver_variable(Environnement* env, const char* nom)
@@ -538,277 +551,242 @@ POUR chaque variable dans l'environnement :
 RETOURNER NULL
 ```
 
-**Complexité :** O(n) où n = nombre de variables
+**Complexité :** `O(n)` où n = nombre de variables
+
+**Optimisation possible :** Table de hachage → `O(1)`
+
+#### 📝 Définition de Variable
 
 ```c
 void semantic_definir_variable(Environnement* env, const char* nom, int valeur)
 ```
 
-**Algorithme :**
-```
-var ← trouver_variable(nom)
-SI var existe :
-    var.valeur ← valeur
-    var.initialise ← 1
-SINON :
-    créer nouvelle variable
-    ajouter à l'environnement
+**Flux d'exécution :**
+
+```mermaid
+graph TD
+    A[Définir variable] --> B{Variable existe?}
+    B -->|Oui| C[Modifier valeur]
+    B -->|Non| D[Créer nouvelle variable]
+    
+    C --> E[Marquer comme initialisée]
+    D --> F[Ajouter à l'environnement]
+    F --> E
+    E --> G[Fin]
+    
+    style A fill:#2196f3,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D fill:#ff9800,color:#fff
+    style G fill:#4caf50,color:#fff
 ```
 
-```c
-void semantic_declarer_variable(Environnement* env, const char* nom)
-```
+### 🔄 Évaluation d'Expressions
 
-**Algorithme :**
-```
-SI variable existe déjà :
-    RETOURNER
-créer nouvelle variable
-    nom ← nom
-    valeur ← 0
-    initialise ← 0
-ajouter à l'environnement
-```
-
-#### 3. Évaluation d'Expressions
+#### Algorithme Récursif
 
 ```c
 static int evaluer_expression(Environnement* env, ASTNode* node)
 ```
 
-**Algorithme (récursif) :**
+**Arbre de décision :**
 
-```
-SI node est NOMBRE :
-    RETOURNER node.nombre
-
-SI node est VARIABLE :
-    var ← trouver_variable(node.valeur)
-    SI var n'existe pas :
-        ERREUR: variable non déclarée
-    SI var.initialise == 0 :
-        ERREUR: variable non initialisée
-    RETOURNER var.valeur
-
-SI node est OPERATEUR :
-    gauche ← evaluer_expression(node.enfants[0])
-    droite ← evaluer_expression(node.enfants[1])
+```mermaid
+graph TD
+    A[evaluer_expression] --> B{Type de nœud?}
     
-    SELON node.valeur :
-        "+": RETOURNER gauche + droite
-        "-": RETOURNER gauche - droite
-        "*": RETOURNER gauche * droite
-        "/": 
-            SI droite == 0 :
-                ERREUR: division par zéro
-            RETOURNER gauche / droite
-        "%": 
-            SI droite == 0 :
-                ERREUR: modulo par zéro
-            RETOURNER gauche % droite
-
-SI node est CONDITION_EXPR :
-    gauche ← evaluer_expression(node.enfants[0])
-    droite ← evaluer_expression(node.enfants[1])
+    B -->|NOMBRE| C[Retourner valeur]
+    B -->|VARIABLE| D[Chercher dans env]
+    B -->|OPERATEUR| E[Évaluer récursivement]
+    B -->|CONDITION_EXPR| F[Évaluer comparaison]
     
-    SELON node.valeur :
-        "==": RETOURNER gauche == droite
-        "!=": RETOURNER gauche != droite
-        ">":  RETOURNER gauche > droite
-        "<":  RETOURNER gauche < droite
-        ">=": RETOURNER gauche >= droite
-        "<=": RETOURNER gauche <= droite
-```
-
-**Complexité :** O(profondeur de l'arbre)
-
-#### 4. Exécution du Programme
-
-```c
-static void executer_noeud(Environnement* env, ASTNode* node)
-```
-
-**Algorithme (récursif) :**
-
-```
-SI error_flag est activé :
-    RETOURNER (arrêt sur erreur)
-
-SELON node.type :
+    D --> D1{Variable existe?}
+    D1 -->|Non| D2[ERREUR: Non déclarée]
+    D1 -->|Oui| D3{Initialisée?}
+    D3 -->|Non| D4[ERREUR: Non initialisée]
+    D3 -->|Oui| D5[Retourner valeur]
     
-    PROGRAMME ou BLOC :
-        POUR chaque enfant :
-            executer_noeud(enfant)
-            SI erreur : RETOURNER
+    E --> E1[Évaluer gauche]
+    E --> E2[Évaluer droite]
+    E1 --> E3[Appliquer opérateur]
+    E2 --> E3
     
-    AFFECTATION :
-        SI nb_enfants == 0 :
-            # Déclaration sans initialisation
-            declarer_variable(node.valeur)
-        SINON :
-            # Déclaration avec initialisation ou réaffectation
-            valeur ← evaluer_expression(node.enfants[0])
-            definir_variable(node.valeur, valeur)
-    
-    AFFICHAGE :
-        valeur ← evaluer_expression(node.enfants[0])
-        SI pas d'erreur :
-            AFFICHER valeur
-    
-    CONDITION :
-        condition ← evaluer_expression(node.condition)
-        SI condition est vraie :
-            executer_noeud(node.bloc_si)
-        SINON SI node.bloc_sinon existe :
-            executer_noeud(node.bloc_sinon)
-    
-    BOUCLE :
-        TANT QUE evaluer_expression(node.condition) ET pas d'erreur :
-            executer_noeud(node.bloc_si)
+    style A fill:#2196f3,color:#fff
+    style C fill:#4caf50,color:#fff
+    style D2 fill:#f44336,color:#fff
+    style D4 fill:#f44336,color:#fff
+    style D5 fill:#4caf50,color:#fff
 ```
 
-### Vérifications Sémantiques
+### 🎯 Vérifications Sémantiques
 
-#### 1. Variables Non Déclarées
+<table>
+<tr>
+<th>🔍 Vérification</th>
+<th>📝 Description</th>
+<th>❌ Erreur</th>
+</tr>
+<tr>
+<td><b>Variable Déclarée</b></td>
+<td>La variable existe dans l'environnement</td>
+<td>
 
-```c
-if (!var) {
-    fprintf(stderr, "Erreur semantique: variable '%s' non declaree\n", nom);
-    error_flag = 1;
-    return 0;
-}
+```
+variable 'x' non declaree
 ```
 
-#### 2. Variables Non Initialisées
+</td>
+</tr>
+<tr>
+<td><b>Variable Initialisée</b></td>
+<td>La variable a une valeur assignée</td>
+<td>
 
-```c
-if (!var->initialise) {
-    fprintf(stderr, "Erreur semantique: variable '%s' utilisee avant initialisation\n", nom);
-    error_flag = 1;
-    return 0;
-}
+```
+variable 'x' utilisee 
+avant initialisation
 ```
 
-#### 3. Division par Zéro
+</td>
+</tr>
+<tr>
+<td><b>Division par Zéro</b></td>
+<td>Le diviseur n'est pas nul</td>
+<td>
 
-```c
-if (droit == 0) {
-    fprintf(stderr, "Erreur semantique: division par zero\n");
-    error_flag = 1;
-    return 0;
-}
+```
+division par zero
 ```
 
-### Gestion du Flag d'Erreur
+</td>
+</tr>
+<tr>
+<td><b>Modulo par Zéro</b></td>
+<td>Le modulo n'est pas nul</td>
+<td>
 
-```c
-static int error_flag = 0;  // Variable globale
+```
+modulo par zero
 ```
 
-- **Initialisé à 0** au début de l'exécution
-- **Mis à 1** lors d'une erreur
-- **Vérifié** avant chaque opération
-- **Arrête** l'exécution si activé
+</td>
+</tr>
+</table>
 
 ---
 
-## Module Principal
+## 🎯 Module Principal
 
-### Fichier
+### 📁 Fichier
 
 - `main.c` - Point d'entrée du compilateur
 
-### Fonction Principale
+### 🔄 Flux d'Exécution
 
-```c
-int main(int argc, char* argv[])
+```mermaid
+graph TD
+    A[main] --> B[Vérifier arguments]
+    B --> C[Lire fichier]
+    C --> D[Afficher source]
+    D --> E["🔍 Phase 1: Lexer"]
+    E --> F["🌳 Phase 2: Parser"]
+    F --> G["✅ Phase 3: Semantic"]
+    G --> H[Libérer mémoire]
+    H --> I[Fin]
+    
+    B -.->|Erreur| J[Usage]
+    C -.->|Erreur| K[Fichier non trouvé]
+    E -.->|Erreur| L[Erreur lexicale]
+    F -.->|Erreur| M[Erreur syntaxique]
+    G -.->|Erreur| N[Erreur sémantique]
+    
+    style A fill:#4caf50,color:#fff
+    style E fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    style F fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style G fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    style I fill:#4caf50,color:#fff
+    
+    style J fill:#f44336,color:#fff
+    style K fill:#f44336,color:#fff
+    style L fill:#f44336,color:#fff
+    style M fill:#f44336,color:#fff
+    style N fill:#f44336,color:#fff
 ```
 
-### Flux d'Exécution
+### 📝 Code Principal
 
 ```c
-// 1. Vérification des arguments
-if (argc < 2) {
-    fprintf(stderr, "Usage: %s <fichier.gal>\n", argv[0]);
-    return 1;
+int main(int argc, char* argv[]) {
+    // 1. Vérification des arguments
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <fichier.gal>\n", argv[0]);
+        return 1;
+    }
+
+    // 2. Lecture du fichier
+    char* source = lire_fichier(argv[1]);
+
+    // 3. Affichage du code source
+    printf("=== Code Source ===\n%s\n", source);
+
+    // 4. Phase Lexicale
+    Lexer* lexer = lexer_creer(source);
+    lexer_analyser(lexer);
+    lexer_afficher_tokens(lexer);
+
+    // 5. Phase Syntaxique
+    Parser* parser = parser_creer(lexer);
+    ASTNode* ast = parser_analyser(parser);
+    parser_afficher_ast(ast, 0);
+
+    // 6. Phase Sémantique
+    Environnement* env = semantic_creer_env();
+    semantic_executer(env, ast);
+
+    // 7. Libération mémoire
+    semantic_liberer_env(env);
+    parser_liberer_ast(ast);
+    parser_liberer(parser);
+    lexer_liberer(lexer);
+    free(source);
+    
+    return 0;
 }
-
-// 2. Lecture du fichier
-char* source = lire_fichier(argv[1]);
-
-// 3. Affichage du code source
-printf("=== Code Source ===\n%s\n", source);
-
-// 4. Phase Lexicale
-Lexer* lexer = lexer_creer(source);
-lexer_analyser(lexer);
-lexer_afficher_tokens(lexer);
-
-// 5. Phase Syntaxique
-Parser* parser = parser_creer(lexer);
-ASTNode* ast = parser_analyser(parser);
-parser_afficher_ast(ast, 0);
-
-// 6. Phase Sémantique
-Environnement* env = semantic_creer_env();
-semantic_executer(env, ast);
-
-// 7. Libération mémoire
-semantic_liberer_env(env);
-parser_liberer_ast(ast);
-parser_liberer(parser);
-lexer_liberer(lexer);
-free(source);
-```
-
-### Fonction de Lecture de Fichier
-
-```c
-char* lire_fichier(const char* nom_fichier)
-```
-
-**Algorithme :**
-```
-ouvrir fichier en mode lecture binaire
-SI échec : retourner NULL
-
-déplacer curseur à la fin
-taille ← position du curseur
-revenir au début
-
-allouer mémoire (taille + 1)
-lire contenu dans buffer
-buffer[taille] ← '\0'
-
-fermer fichier
-RETOURNER buffer
 ```
 
 ---
 
-## Gestion Mémoire
+## 💾 Gestion Mémoire
 
-### Stratégie Générale
+### 🎯 Stratégie Générale
 
-- **Allocation dynamique** pour flexibilité
-- **Libération explicite** pour éviter les fuites
-- **Doublement de capacité** pour les tableaux dynamiques
+```mermaid
+graph LR
+    A[Allocation<br/>dynamique] --> B[Utilisation]
+    B --> C[Expansion<br/>si nécessaire]
+    C --> D[Libération<br/>explicite]
+    
+    style A fill:#4caf50,color:#fff
+    style B fill:#2196f3,color:#fff
+    style C fill:#ff9800,color:#fff
+    style D fill:#f44336,color:#fff
+```
 
-### Par Module
+### 📊 Par Module
 
-#### Lexer
+#### 🔍 Lexer
 
 ```c
-// Allocation
+// ✅ Allocation
 lexer->tokens = malloc(100 * sizeof(Token));
 
-// Expansion
+// 📈 Expansion (doublement de capacité)
 if (lexer->nb_tokens >= lexer->capacite) {
     lexer->capacite *= 2;
-    lexer->tokens = realloc(lexer->tokens, ...);
+    lexer->tokens = realloc(lexer->tokens, 
+                           lexer->capacite * sizeof(Token));
 }
 
-// Libération
+// 🧹 Libération
 for (int i = 0; i < lexer->nb_tokens; i++) {
     free(lexer->tokens[i].valeur);
 }
@@ -816,214 +794,375 @@ free(lexer->tokens);
 free(lexer);
 ```
 
-#### Parser
+**Croissance de la capacité :**
+
+```
+Capacité initiale: 100
+Token 100: ×2 → 200
+Token 200: ×2 → 400
+Token 400: ×2 → 800
+...
+```
+
+#### 🌳 Parser
 
 ```c
-// Allocation des enfants
+// ✅ Allocation des enfants
 node->enfants = malloc(10 * sizeof(ASTNode*));
 
-// Expansion
+// 📈 Expansion
 if (node->nb_enfants >= node->capacite) {
     node->capacite *= 2;
-    node->enfants = realloc(node->enfants, ...);
+    node->enfants = realloc(node->enfants, 
+                           node->capacite * sizeof(ASTNode*));
 }
 
-// Libération (récursive)
+// 🧹 Libération (récursive)
 void parser_liberer_ast(ASTNode* node) {
+    if (!node) return;
+    
+    // Libérer récursivement les enfants
     for (int i = 0; i < node->nb_enfants; i++) {
         parser_liberer_ast(node->enfants[i]);
     }
+    
+    // Libérer les nœuds spéciaux
+    if (node->condition) parser_liberer_ast(node->condition);
+    if (node->bloc_si) parser_liberer_ast(node->bloc_si);
+    if (node->bloc_sinon) parser_liberer_ast(node->bloc_sinon);
+    
+    // Libérer le nœud lui-même
     free(node->valeur);
     free(node->enfants);
     free(node);
 }
 ```
 
-#### Semantic
+#### ✅ Semantic
 
 ```c
-// Environnement : tableau fixe
+// ✅ Environnement : tableau fixe
 Variable variables[MAX_VARIABLES];
 
-// Libération
+// 🧹 Libération
 for (int i = 0; i < env->nb_variables; i++) {
     free(env->variables[i].nom);
 }
 free(env);
 ```
 
-### Prévention des Fuites
+### ⚠️ Prévention des Fuites Mémoire
 
-- **Ordre de libération** : enfants avant parents
-- **Vérification NULL** avant free
-- **Pas de double free**
+<table>
+<tr>
+<th>✅ Bonne Pratique</th>
+<th>📝 Description</th>
+</tr>
+<tr>
+<td><b>Ordre de libération</b></td>
+<td>Libérer les enfants avant les parents (récursif)</td>
+</tr>
+<tr>
+<td><b>Vérification NULL</b></td>
+<td>Toujours vérifier avant <code>free()</code></td>
+</tr>
+<tr>
+<td><b>Pas de double free</b></td>
+<td>Ne jamais libérer deux fois la même mémoire</td>
+</tr>
+<tr>
+<td><b>Libération complète</b></td>
+<td>Libérer tous les pointeurs alloués</td>
+</tr>
+</table>
 
 ---
 
-## Gestion des Erreurs
+## 🐛 Gestion des Erreurs
 
-### Types d'Erreurs
+### 📊 Types d'Erreurs
 
-| Type | Phase | Exemple |
-|------|-------|---------|
-| **Lexicale** | Lexer | Caractère invalide `@` |
-| **Syntaxique** | Parser | `variable x` (manque `;`) |
-| **Sémantique** | Semantic | Variable non déclarée |
+```mermaid
+graph TD
+    A[Erreurs] --> B[Lexicales]
+    A --> C[Syntaxiques]
+    A --> D[Sémantiques]
+    
+    B --> B1[Caractère invalide]
+    B --> B2[Token malformé]
+    
+    C --> C1[Syntaxe incorrecte]
+    C --> C2[Parenthèses non fermées]
+    C --> C3[Point-virgule manquant]
+    
+    D --> D1[Variable non déclarée]
+    D --> D2[Variable non initialisée]
+    D --> D3[Division par zéro]
+    
+    style A fill:#1976d2,color:#fff
+    style B fill:#ff9800,color:#fff
+    style C fill:#f44336,color:#fff
+    style D fill:#e91e63,color:#fff
+```
 
-### Mécanisme d'Erreur
+### 🔧 Mécanisme d'Erreur
 
 #### Flag Global
 
 ```c
-static int error_flag = 0;
+static int error_flag = 0;  // Variable globale statique
 ```
 
-- **Activé** lors d'une erreur
-- **Vérifié** avant chaque opération critique
-- **Arrête l'exécution** si activé
-
-#### Affichage des Erreurs
-
-```c
-fprintf(stderr, "Erreur semantique: %s\n", message);
-fflush(stderr);  // Forcer l'affichage immédiat
-```
-
-#### Propagation
-
-```c
-if (error_flag) return;  // Dans executer_noeud()
-```
-
-### Messages d'Erreur
-
-- **Clairs** et **précis**
-- **Ligne et colonne** (quand disponible)
-- **Suggestion** de correction (quand possible)
-
----
-
-## Complexité et Performance
-
-### Analyse de Complexité
-
-| Phase | Complexité Temporelle | Complexité Spatiale |
-|-------|----------------------|---------------------|
-| **Lexer** | O(n) | O(n) |
-| **Parser** | O(m) | O(m) |
-| **Semantic** | O(itérations × profondeur AST) | O(variables) |
-
-Où :
-- n = longueur du code source
-- m = nombre de tokens
-- variables = nombre de variables déclarées
-
-### Optimisations Possibles
-
-1. **Table de hachage** pour les variables (O(1) au lieu de O(n))
-2. **Pool de mémoire** pour les nœuds AST
-3. **Compilation JIT** au lieu d'interprétation
-4. **Cache des expressions constantes**
-
-### Limitations Actuelles
-
-- **MAX_VARIABLES** = 1000 (tableau fixe)
-- **Recherche linéaire** dans l'environnement
-- **Pas d'optimisation** de l'AST
-- **Interprétation** pure (pas de compilation)
-
----
-
-## Technologies Utilisées
-
-- **Langage** : C (C99 standard)
-- **Compilateur** : GCC
-- **Build System** : Make
-- **Plateforme** : Linux, Windows (via MinGW), macOS
-
----
-
-## Diagrammes Détaillés
-
-### Flux de Données
+**États du flag :**
 
 ```mermaid
-flowchart TD
-    A[Source Code]
-
-    A --> B[Lexer]
-    B --> C[Tokens]
-
-    C --> D[Parser]
-    D --> E[AST]
-
-    E --> F[Semantic Analysis]
-    F --> G[Output]
-    F --> H[Environment]
-
-    B --> X1[Errors]
-    D --> X2[Errors]
-    E --> X3[Errors]
-    A --> X4[Errors]
+stateDiagram-v2
+    [*] --> Normal: Initialisation
+    Normal --> Erreur: Erreur détectée
+    Erreur --> [*]: Fin d'exécution
+    
+    note right of Normal
+        error_flag = 0
+        Exécution continue
+    end note
+    
+    note right of Erreur
+        error_flag = 1
+        Exécution arrêtée
+    end note
 ```
 
-### Hiérarchie des Structures
+#### Propagation des Erreurs
+
+```c
+// ✅ Définir l'erreur
+if (condition_erreur) {
+    fprintf(stderr, "Erreur: %s\n", message);
+    error_flag = 1;
+    return;
+}
+
+// ✅ Vérifier l'erreur
+if (error_flag) return;  // Arrêter l'exécution
+```
+
+### 📝 Messages d'Erreur
+
+<table>
+<tr>
+<th>Type</th>
+<th>Message</th>
+<th>Action</th>
+</tr>
+<tr>
+<td>🔍 Lexicale</td>
+<td><code>Caractère invalide '@' à la ligne 5</code></td>
+<td>Corriger le caractère</td>
+</tr>
+<tr>
+<td>🌳 Syntaxique</td>
+<td><code>Erreur syntaxique à la ligne 10<br/>Point-virgule attendu</code></td>
+<td>Ajouter <code>;</code></td>
+</tr>
+<tr>
+<td>✅ Sémantique</td>
+<td><code>Erreur semantique:<br/>variable 'x' non declaree</code></td>
+<td>Déclarer la variable</td>
+</tr>
+</table>
+
+---
+
+## 📊 Complexité et Performance
+
+### 🎯 Analyse de Complexité
+
+| Phase | ⏱️ Temporelle | 💾 Spatiale | 📝 Détails |
+|-------|--------------|------------|----------|
+| **🔍 Lexer** | `O(n)` | `O(n)` | n = longueur du code |
+| **🌳 Parser** | `O(m)` | `O(m)` | m = nombre de tokens |
+| **✅ Semantic** | `O(i × d)` | `O(v)` | i = itérations, d = profondeur AST, v = variables |
+
+### 📈 Graphique de Performance
+
+```
+Temps d'exécution (ms)
+│
+│     ╱
+│    ╱ Semantic (O(i×d))
+│   ╱
+│  ╱  Parser (O(m))
+│ ╱
+│╱ Lexer (O(n))
+└──────────────────── Taille du programme
+```
+
+### 🚀 Optimisations Possibles
+
+<table>
+<tr>
+<th>🎯 Optimisation</th>
+<th>📊 Gain</th>
+<th>💡 Description</th>
+</tr>
+<tr>
+<td><b>Table de hachage</b></td>
+<td><code>O(1)</code> au lieu de <code>O(n)</code></td>
+<td>Pour la recherche de variables</td>
+</tr>
+<tr>
+<td><b>Pool de mémoire</b></td>
+<td>Allocation plus rapide</td>
+<td>Pour les nœuds AST</td>
+</tr>
+<tr>
+<td><b>Compilation JIT</b></td>
+<td>Exécution plus rapide</td>
+<td>Compiler en code machine</td>
+</tr>
+<tr>
+<td><b>Cache d'expressions</b></td>
+<td>Éviter recalculs</td>
+<td>Pour expressions constantes</td>
+</tr>
+</table>
+
+### ⚠️ Limitations Actuelles
+
+```
+┌─────────────────────────────────────────┐
+│ MAX_VARIABLES = 1000                    │
+│ → Tableau fixe, pas dynamique           │
+├─────────────────────────────────────────┤
+│ Recherche linéaire O(n)                 │
+│ → Pas de table de hachage               │
+├─────────────────────────────────────────┤
+│ Pas d'optimisation de l'AST             │
+│ → Expressions non simplifiées           │
+├─────────────────────────────────────────┤
+│ Interprétation pure                     │
+│ → Pas de compilation vers code machine  │
+└─────────────────────────────────────────┘
+```
+
+---
+
+## 🛠️ Technologies Utilisées
+
+<table>
+<tr>
+<td align="center">
+
+### 📝 Langage
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+
+C99 Standard
+
+</td>
+<td align="center">
+
+### 🔨 Compilateur
+![GCC](https://img.shields.io/badge/GCC-4.8+-orange?style=for-the-badge)
+
+GNU Compiler Collection
+
+</td>
+<td align="center">
+
+### ⚙️ Build System
+![Make](https://img.shields.io/badge/Make-GNU-red?style=for-the-badge)
+
+GNU Make
+
+</td>
+</tr>
+</table>
+
+**Plateformes supportées :**
+- 🐧 Linux
+- 🪟 Windows (via MinGW/WSL)
+- 🍎 macOS
+
+---
+
+## 🎨 Diagrammes de Flux
+
+### 🔄 Cycle de Vie Complet
 
 ```mermaid
-classDiagram
-    class Lexer {
-        Token[] tokens
-    }
-
-    class Token {
-        TokenType type
-        string motCle
-        string valeur
-    }
-
-    class Parser {
-        Lexer* lexer
-        ASTNode* ast
-    }
-
-    class ASTNode {
-        ASTNodeType type
-        ASTNode[] enfants
-        ASTNode* condition
-        ASTNode* bloc_si
-        ASTNode* bloc_sinon
-    }
-
-    class Semantic {
-        Environnement env
-        bool error_flag
-    }
-
-    class Environnement {
-        Variable[] variables
-    }
-
-    class Variable {
-        string nom
-        int valeur
-        bool initialise
-    }
-
-    Lexer --> Token
-    Parser --> Lexer
-    Parser --> ASTNode
-    Semantic --> Environnement
-    Environnement --> Variable
+sequenceDiagram
+    participant U as Utilisateur
+    participant M as main.c
+    participant L as Lexer
+    participant P as Parser
+    participant S as Semantic
+    
+    U->>M: ./galant-compiler prog.gal
+    M->>M: Lire fichier
+    M->>L: lexer_creer(source)
+    L-->>M: Lexer*
+    M->>L: lexer_analyser()
+    L->>L: Tokenization
+    L-->>M: Tokens[]
+    
+    M->>P: parser_creer(lexer)
+    P-->>M: Parser*
+    M->>P: parser_analyser()
+    P->>P: Construire AST
+    P-->>M: ASTNode*
+    
+    M->>S: semantic_creer_env()
+    S-->>M: Environnement*
+    M->>S: semantic_executer(env, ast)
+    S->>S: Exécuter programme
+    S-->>M: Résultat
+    
+    M->>M: Libérer mémoire
+    M-->>U: Sortie finale
 ```
 
 ---
 
-## Conclusion
+## 📚 Ressources
 
-L'architecture de GALANT suit les principes classiques de construction de compilateur tout en restant simple et éducative. Chaque phase est clairement séparée, facilitant la compréhension et la maintenance.
+| 📄 Document | 📝 Description |
+|------------|---------------|
+| [README.md](README.md) | Vue d'ensemble du projet |
+| [GUIDE_UTILISATION.md](GUIDE_UTILISATION.md) | Guide utilisateur complet |
+| [LICENSE](LICENSE) | Licence MIT |
 
 ---
 
-**Pour plus d'informations, consultez :**
-- `README.md` - Vue d'ensemble
-- `GUIDE_UTILISATION.md` - Guide utilisateur complet
+## 🎯 Conclusion
+
+L'architecture de GALANT suit les **principes classiques** de construction de compilateur tout en restant **simple et éducative**. Chaque phase est clairement séparée, facilitant la compréhension et la maintenance.
+
+### 🌟 Points Forts
+
+- ✅ **Modularité** - Séparation claire des responsabilités
+- ✅ **Clarté** - Code lisible et bien documenté
+- ✅ **Robustesse** - Gestion complète des erreurs
+- ✅ **Éducatif** - Idéal pour l'apprentissage
+
+### 🚀 Extensions Possibles
+
+- 📝 Fonctions définies par l'utilisateur
+- 📚 Tableaux et structures de données
+- 🔗 Opérateurs logiques (ET, OU, NON)
+- 💾 Génération de code assembleur
+- 🐛 Débogueur intégré
+
+---
+
+<div align="center">
+
+**Documentation technique complète pour GALANT** 🧠
+
+[![Retour au README](https://img.shields.io/badge/←_Retour_au-README-blue?style=for-the-badge)](README.md)
+[![Guide](https://img.shields.io/badge/Guide-Utilisation-green?style=for-the-badge)](GUIDE_UTILISATION.md)
+
+---
+
+*Fait avec ❤️ pour l'éducation en français* 🇫🇷
+
+</div>
